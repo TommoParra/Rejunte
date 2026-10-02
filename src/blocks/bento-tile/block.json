@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rejunte/bento-tile",
+	"version": "1.0.0",
+	"title": "Mosaico",
+	"category": "rejunte",
+	"parent": [ "rejunte/vitrina" ],
+	"icon": "screenoptions",
+	"description": "Una pieza de la vitrina: una foto, una palabra grande o un dato destacado.",
+	"textdomain": "rejunte",
+	"attributes": {
+		"variant": { "type": "string", "enum": [ "image", "word", "deep" ], "default": "image" },
+		"span": { "type": "string", "enum": [ "", "2x1", "2x2" ], "default": "" },
+		"image": { "type": "object", "default": {} },
+		"word": { "type": "string", "default": "" },
+		"wordSize": { "type": "string", "enum": [ "normal", "big" ], "default": "normal" },
+		"label": { "type": "string", "default": "" },
+		"kicker": { "type": "string", "default": "" },
+		"display": { "type": "string", "default": "" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js"
+}

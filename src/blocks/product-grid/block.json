@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rejunte/product-grid",
+	"version": "1.0.0",
+	"title": "Productos",
+	"category": "rejunte",
+	"icon": "products",
+	"description": "Productos de la tienda en tarjetas de precio con foto. Muestra los de la página (tienda, categoría, búsqueda), los relacionados con el producto o los primeros de la vitrina.",
+	"keywords": [ "productos", "tienda", "woocommerce", "vitrina" ],
+	"textdomain": "rejunte",
+	"usesContext": [ "postId", "postType" ],
+	"attributes": {
+		"source": { "type": "string", "enum": [ "query", "related", "latest", "category" ], "default": "latest" },
+		"category": { "type": "number", "default": 0 },
+		"count": { "type": "number", "default": 3 },
+		"showCategories": { "type": "boolean", "default": false },
+		"eyebrow": { "type": "string", "default": "" },
+		"heading": { "type": "string", "default": "" },
+		"buttonLabel": { "type": "string", "default": "Sumar" },
+		"addedLabel": { "type": "string", "default": "Sumado" },
+		"isPreview": { "type": "boolean", "default": false }
+	},
+	"supports": {
+		"anchor": true,
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"viewScriptModule": "file:./view.js",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "rejunte/hero",
+  "version": "1.0.0",
+  "title": "Portada",
+  "category": "rejunte",
+  "icon": "cover-image",
+  "description": "Logo, titular, entradilla y dos llamadas a la acción. La imagen se carga con prioridad: es lo primero que se ve.",
+  "keywords": [
+    "hero",
+    "portada",
+    "inicio"
+  ],
+  "textdomain": "rejunte",
+  "attributes": {
+    "image": {
+      "type": "object",
+      "default": {}
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "lead": {
+      "type": "string",
+      "default": ""
+    },
+    "primaryLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "primaryUrl": {
+      "type": "string",
+      "default": "#tanda"
+    },
+    "secondaryLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "secondaryUrl": {
+      "type": "string",
+      "default": "#encargos"
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "html": false
+  },
+  "example": {
+    "attributes": {
+      "eyebrow": "Pastelería argentina · Barcelona",
+      "heading": "Dulce de leche, en Gràcia",
+      "lead": "Alfajores de maicena, medialunas y tortas hechas de a poco en un taller del barrio.",
+      "primaryLabel": "Ver la tanda",
+      "secondaryLabel": "Encargar una torta"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css"
+}

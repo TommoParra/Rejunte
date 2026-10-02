@@ -1,0 +1,82 @@
+.rj-products {
+	display: grid;
+	gap: 3.25rem;
+}
+
+.rj-products__head {
+	display: grid;
+	gap: 0.9rem;
+}
+
+.rj-products__title {
+	font-size: clamp(2rem, 4vw, 2.9rem);
+	line-height: 1;
+}
+
+.rj-products__empty {
+	font-size: 1.25rem;
+	font-weight: 500;
+}
+
+// The editor preview is a picture of the cards, not a working form.
+.rj-products__preview {
+	pointer-events: none;
+}
+
+.rj-pagination ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+
+	a,
+	span {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-inline-size: 46px;
+		min-block-size: 46px;
+		padding-inline: 1rem;
+		border: 2px solid var(--rj-red);
+		border-radius: 999px;
+		font-size: 0.8rem;
+		font-weight: 800;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--rj-red);
+	}
+
+	a:hover,
+	.current {
+		background: var(--rj-red);
+		color: var(--rj-surface);
+		text-decoration: none;
+	}
+}
+
+// Category chips: the outlined pills of the encargos panel, as links.
+.rj-cats .rj-chips > li {
+	padding: 0;
+	border: 0;
+}
+
+.rj-cats .rj-chip {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: 44px;
+	padding: 0 1.4rem;
+	border: 2px solid rgb(var(--rj-red-rgb) / 0.45);
+	border-radius: 999px;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	transition: background-color 0.18s, color 0.18s, border-color 0.18s;
+
+	&:hover,
+	&[aria-current="page"] {
+		border-color: var(--rj-red);
+		background: var(--rj-red);
+		color: var(--rj-surface);
+		text-decoration: none;
+	}
+}

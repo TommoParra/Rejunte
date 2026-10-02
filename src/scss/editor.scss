@@ -1,0 +1,104 @@
+// Editor-only adjustments, loaded inside the editor iframe after global.css.
+// Everything here is chrome for editing; none of it changes how a block looks.
+
+// In the editor the template part needs a box of its own, or the block toolbar
+// has nothing to anchor to.
+.editor-styles-wrapper .rj-part--header {
+	display: block;
+}
+
+// Moving things hold still while someone is editing them.
+.rj-ticker.is-selected .rj-ticker__rail,
+.rj-ticker.has-child-selected .rj-ticker__rail,
+.rj-hero.is-selected .rj-image,
+.rj-hero.has-child-selected .rj-image {
+	animation-play-state: paused;
+}
+
+// Floating "change image" control on an image slot.
+.rj-edit-image {
+	position: relative;
+	display: contents;
+
+	&__actions {
+		position: absolute;
+		z-index: 5;
+		inset-block-start: 0.75rem;
+		inset-inline-end: 0.75rem;
+		display: flex;
+		gap: 0.4rem;
+	}
+}
+
+.rj-edit-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	min-block-size: 32px;
+	padding: 0 0.85rem;
+	border: 0;
+	border-radius: 999px;
+	background: var(--rj-red);
+	box-shadow: 0 4px 14px rgb(var(--rj-shadow-rgb) / 0.25);
+	color: var(--rj-surface);
+	font: 700 0.7rem/1 var(--rj-body);
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	cursor: pointer;
+
+	&:hover,
+	&:focus-visible {
+		background: var(--rj-red-deep);
+	}
+
+	&--light {
+		background: var(--rj-surface);
+		color: var(--rj-red);
+
+		&:hover,
+		&:focus-visible {
+			background: #fff;
+		}
+	}
+
+	&--round {
+		justify-content: center;
+		inline-size: 32px;
+		padding: 0;
+		font-size: 1rem;
+	}
+}
+
+// Add / remove controls on inline lists (nav links, chips, ticker items, footer lines).
+.rj-edit-list-item {
+	position: relative;
+
+	> .rj-edit-chip--remove {
+		position: absolute;
+		z-index: 4;
+		inset-block-start: -12px;
+		inset-inline-end: -12px;
+		inline-size: 24px;
+		min-block-size: 24px;
+		padding: 0;
+		justify-content: center;
+		font-size: 0.9rem;
+		opacity: 0;
+		transition: opacity 0.15s;
+	}
+
+	&:hover > .rj-edit-chip--remove,
+	&:focus-within > .rj-edit-chip--remove {
+		opacity: 1;
+	}
+}
+
+.rj-edit-add {
+	align-self: center;
+}
+
+// Rich text placeholders take the colour of the text they stand in for.
+.rj-hero [data-rich-text-placeholder]::after,
+.rj-price [data-rich-text-placeholder]::after {
+	opacity: 0.45;
+}

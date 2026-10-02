@@ -1,0 +1,19 @@
+{
+  "name": "rejunte-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Rejunte — pastelería argentina en Barcelona. Block theme.",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build": "npm run build:blocks && npm run build:css",
+    "build:blocks": "wp-scripts build --webpack-src-dir=src/blocks --output-path=build/blocks --experimental-modules && wp-scripts build-blocks-manifest --input=build/blocks --output=build/blocks/blocks-manifest.php",
+    "build:css": "sass --no-source-map --style=compressed src/scss/global.scss:assets/css/global.css src/scss/editor.scss:assets/css/editor.css src/scss/woocommerce.scss:assets/css/woocommerce.css",
+    "start": "wp-scripts start --webpack-src-dir=src/blocks --output-path=build/blocks --experimental-modules",
+    "lint:js": "wp-scripts lint-js src",
+    "lint:css": "wp-scripts lint-style \"src/**/*.scss\""
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^31.0.0",
+    "sass": "^1.80.0"
+  }
+}

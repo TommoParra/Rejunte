@@ -1,0 +1,110 @@
+// Free-form content written with core blocks (legal pages, product
+// descriptions, posts), set in the same voice as the front page: display face
+// for headings, the body weight and leading of the prototype's paragraphs.
+
+.rj-prose {
+	max-inline-size: 46rem;
+	font-size: 1.06rem;
+	font-weight: 500;
+	line-height: 1.7;
+
+	> * + * {
+		margin-block-start: 1.25em;
+	}
+
+	> :is(h2, h3, h4) + * {
+		margin-block-start: 0.75em;
+	}
+
+	> * + :is(h2, h3, h4) {
+		margin-block-start: 2.2em;
+	}
+
+	h2 {
+		font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+		line-height: 1;
+	}
+
+	h3 {
+		font-size: 1.75rem;
+		line-height: 1.04;
+	}
+
+	h4 {
+		font-family: var(--rj-body);
+		font-size: 0.78rem;
+		font-weight: 800;
+		letter-spacing: 0.26em;
+		text-transform: uppercase;
+	}
+
+	a:where(:not(.wp-element-button)) {
+		color: var(--rj-red);
+		text-decoration: underline;
+		text-decoration-color: rgb(var(--rj-red-rgb) / 0.35);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.2em;
+
+		&:hover {
+			text-decoration-color: currentcolor;
+		}
+	}
+
+	strong {
+		font-weight: 800;
+	}
+
+	.wp-block-list {
+		padding-inline-start: 1.2em;
+
+		li + li {
+			margin-block-start: 0.4em;
+		}
+
+		li::marker {
+			color: var(--rj-red);
+		}
+	}
+
+	.wp-block-quote {
+		padding-inline-start: 1.5rem;
+		border-inline-start: 4px solid var(--rj-red);
+		font-family: var(--rj-display);
+		font-size: 1.5rem;
+		line-height: 1.25;
+		color: var(--rj-red);
+	}
+
+	.wp-block-image img {
+		border-radius: 26px;
+	}
+
+	.wp-block-separator {
+		block-size: 0;
+		border: 0;
+		border-block-start: 2px solid rgb(var(--rj-red-rgb) / 0.22);
+	}
+
+	.wp-block-table {
+		overflow-x: auto;
+
+		th,
+		td {
+			padding: 0.75rem 1rem;
+			border-block-end: 1px solid rgb(var(--rj-red-rgb) / 0.22);
+			text-align: start;
+		}
+
+		th {
+			font-size: 0.78rem;
+			font-weight: 800;
+			letter-spacing: 0.16em;
+			text-transform: uppercase;
+		}
+	}
+
+	// Theme blocks dropped into prose break out of the reading measure.
+	> [class*="wp-block-rejunte-"] {
+		max-inline-size: none;
+	}
+}

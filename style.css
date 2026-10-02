@@ -1,0 +1,16 @@
+/*
+Theme Name: Rejunte
+Theme URI: https://github.com/TommoParra/Rejunte
+Author: Rejunte
+Description: Pastelería argentina en Barcelona. Block theme built from the Rejunte prototype: every section is a Gutenberg block that edits in place, renders the same in the editor and on the site, and ships almost no JavaScript.
+Requires at least: 6.8
+Tested up to: 7.1
+Requires PHP: 8.1
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: rejunte
+Tags: block-theme, full-site-editing, e-commerce, accessibility-ready
+*/
+
+/* Styles live in assets/css (compiled from src/scss) and in each block's own stylesheet. */

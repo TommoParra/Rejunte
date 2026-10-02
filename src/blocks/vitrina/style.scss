@@ -1,0 +1,208 @@
+@use "../../scss/breakpoints" as *;
+
+.rj-vitrina {
+	padding: 7.5rem var(--rj-gutter);
+}
+
+.rj-vitrina__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 2.5rem;
+	margin-block-end: 3.5rem;
+
+	> div {
+		display: grid;
+		gap: 1rem;
+	}
+}
+
+.rj-vitrina__title {
+	max-inline-size: 520px;
+	font-size: clamp(2.2rem, 4.6vw, 3.5rem);
+	line-height: 0.98;
+	text-wrap: balance;
+}
+
+.rj-vitrina__text {
+	max-inline-size: 340px;
+	font-size: 1.06rem;
+	font-weight: 500;
+	line-height: 1.7;
+}
+
+// Bento grid. Effects only switch on when the script marks it enhanced.
+.rj-bento {
+	--glow: 160 18 43;
+	--spot: 300px;
+
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	grid-auto-rows: 236px;
+	gap: 22px;
+	perspective: 1200px;
+
+	> [data-bento-card] {
+		position: relative;
+		overflow: hidden;
+		min-inline-size: 0;
+		border-radius: var(--rj-radius);
+		transform-style: preserve-3d;
+		transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+		&[data-span="2x2"] {
+			grid-row: span 2;
+			grid-column: span 2;
+		}
+
+		&[data-span="2x1"] {
+			grid-column: span 2;
+		}
+	}
+
+	&[data-enhanced="true"] > [data-bento-card] {
+		transform:
+			translate3d(calc(var(--mag-x, 0px) * var(--magnet-on, 1)), calc(var(--mag-y, 0px) * var(--magnet-on, 1)), 0)
+			rotateX(calc(var(--tilt-x, 0deg) * var(--tilt-on, 1)))
+			rotateY(calc(var(--tilt-y, 0deg) * var(--tilt-on, 1)));
+
+		// Proximity border glow. (The prototype wrote the colour as "160, 18, 43",
+		// which is invalid inside rgb(… / alpha), so its glow never drew.)
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			border: 2px solid rgb(var(--glow) / calc(var(--near, 0) * 0.55 * var(--border-glow-on, 1)));
+			border-radius: inherit;
+			box-shadow: 0 0 calc(28px * var(--near, 0)) rgb(var(--glow) / calc(var(--near, 0) * 0.4 * var(--border-glow-on, 1)));
+			pointer-events: none;
+			transition: border-color 0.25s ease, box-shadow 0.25s ease;
+		}
+
+		&:hover [data-bento-glow] {
+			opacity: var(--spotlight-on, 1);
+		}
+	}
+
+	[data-bento-glow] {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.35s ease;
+	}
+}
+
+.rj-bento__ripple {
+	position: absolute;
+	inline-size: 12px;
+	block-size: 12px;
+	margin: -6px 0 0 -6px;
+	border-radius: 999px;
+	background: rgb(var(--glow) / 0.28);
+	pointer-events: none;
+	animation: rj-bento-ripple 0.6s ease-out forwards;
+}
+
+@keyframes rj-bento-ripple {
+
+	to {
+		opacity: 0;
+		transform: scale(34);
+	}
+}
+
+// Tiles.
+.rj-tile {
+	display: flex;
+
+	&--image {
+		background: var(--rj-mid);
+
+		.rj-image {
+			block-size: 100%;
+		}
+	}
+
+	&--word {
+		align-items: center;
+		justify-content: center;
+		padding: 1.6rem;
+		background: var(--rj-surface);
+	}
+
+	&--deep {
+		flex-direction: column;
+		justify-content: space-between;
+		padding: 1.75rem;
+		background: var(--rj-red);
+		color: var(--rj-surface);
+	}
+}
+
+.rj-tile__word {
+	font-family: var(--rj-display);
+	font-size: 2.1rem;
+	line-height: 0.92;
+	text-align: center;
+	color: var(--rj-red);
+
+	&--big {
+		font-size: 2.75rem;
+	}
+}
+
+.rj-tile__kicker {
+	font-size: 0.72rem;
+	font-weight: 800;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+}
+
+.rj-tile__display {
+	font-family: var(--rj-display);
+	font-size: 1.88rem;
+	line-height: 1.02;
+}
+
+.rj-tile__glow {
+	background: radial-gradient(var(--spot, 260px) circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.42), transparent 70%);
+
+	&--red {
+		background: radial-gradient(var(--spot, 220px) circle at var(--mx, 50%) var(--my, 50%), rgb(var(--rj-red-rgb) / 0.16), transparent 70%);
+	}
+}
+
+@include below($tablet) {
+	.rj-bento {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+
+		> [data-bento-card][data-span="2x2"],
+		> [data-bento-card][data-span="2x1"] {
+			grid-column: span 2;
+		}
+	}
+}
+
+@include below($narrow) {
+	.rj-bento {
+		grid-template-columns: minmax(0, 1fr);
+		grid-auto-rows: 200px;
+
+		> [data-bento-card][data-span] {
+			grid-column: span 1;
+		}
+	}
+}
+
+@include reduced-motion {
+	.rj-bento > [data-bento-card] {
+		transform: none;
+		transition: none;
+	}
+
+	.rj-bento__ripple {
+		display: none;
+	}
+}

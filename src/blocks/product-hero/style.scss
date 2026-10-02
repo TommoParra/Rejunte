@@ -1,0 +1,315 @@
+@use "../../scss/breakpoints" as *;
+
+// The product page header, composed from the front page's parts: the hero's
+// two columns, the encargos panel's arched photo, the price card's amount.
+
+.rj-product {
+	display: grid;
+	grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+	gap: 5rem;
+	align-items: center;
+	padding: 4.4rem var(--rj-gutter) 6.9rem;
+}
+
+.rj-product__media {
+	display: grid;
+	gap: 1.1rem;
+	justify-items: center;
+}
+
+.rj-product .rj-image.rj-product__photo {
+	max-inline-size: 460px;
+	border-radius: 999px 999px 40px 40px;
+}
+
+.rj-product__thumbs {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.75rem;
+}
+
+.rj-product__thumb {
+	display: block;
+	overflow: hidden;
+	inline-size: 64px;
+	aspect-ratio: 1;
+	border: 3px solid transparent;
+	border-radius: 18px;
+	background: var(--rj-mid);
+	transition: border-color 0.18s;
+
+	&[aria-pressed="true"],
+	&:hover {
+		border-color: var(--rj-red);
+	}
+}
+
+.rj-product__thumb-img {
+	inline-size: 100%;
+	block-size: 100%;
+	object-fit: cover;
+}
+
+.rj-product__copy {
+	display: grid;
+	gap: 1.6rem;
+	justify-items: start;
+}
+
+.rj-product__crumbs ol {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.26em;
+	text-transform: uppercase;
+	color: var(--rj-red);
+
+	li + li::before {
+		content: "·";
+		margin-inline-end: 0.6rem;
+	}
+}
+
+.rj-product__title {
+	font-size: clamp(2.6rem, 6vw, 4.5rem);
+	line-height: 0.98;
+	letter-spacing: -0.01em;
+}
+
+.rj-product__lead {
+	display: grid;
+	gap: 1em;
+	max-inline-size: 460px;
+	font-size: 1.25rem;
+	font-weight: 500;
+	line-height: 1.7;
+	text-wrap: pretty;
+}
+
+.rj-product__buy {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1.25rem 2rem;
+}
+
+.rj-product__amount {
+	font-family: var(--rj-display);
+	font-size: 2.6rem;
+	line-height: 1;
+	color: var(--rj-red);
+}
+
+.rj-product__form {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+}
+
+.rj-product__soldout {
+	padding: 0.7rem 1.4rem;
+	border: 2px solid rgb(var(--rj-red-rgb) / 0.45);
+	border-radius: 999px;
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--rj-red);
+}
+
+// Quantity stepper.
+.rj-qty {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: 56px;
+	padding: 4px;
+	border: 2px solid var(--rj-red);
+	border-radius: 999px;
+	color: var(--rj-red);
+}
+
+.rj-qty__step {
+	display: grid;
+	place-items: center;
+	inline-size: 44px;
+	block-size: 44px;
+	border-radius: 999px;
+	font-size: 1.25rem;
+	line-height: 1;
+	transition: background-color 0.18s, color 0.18s;
+
+	&:hover {
+		background: var(--rj-red);
+		color: var(--rj-surface);
+	}
+}
+
+.rj-qty__input {
+	display: inline-block;
+	inline-size: 3ch;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	font-size: 1.05rem;
+	font-weight: 800;
+	text-align: center;
+	color: inherit;
+	appearance: textfield;
+
+	&::-webkit-inner-spin-button,
+	&::-webkit-outer-spin-button {
+		margin: 0;
+		appearance: none;
+	}
+}
+
+@include below($tablet) {
+	.rj-product {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 3rem;
+	}
+}
+
+@include below($phone) {
+	.rj-product {
+		gap: 2rem;
+		padding-block: 2.5rem 4rem;
+	}
+
+	.rj-product .rj-image.rj-product__photo {
+		max-inline-size: 320px;
+	}
+
+	.rj-product__form,
+	.rj-product__form .rj-button {
+		inline-size: 100%;
+	}
+}
+
+@include reduced-motion {
+	.rj-product__thumb,
+	.rj-qty__step {
+		transition: none;
+	}
+}
+
+// WooCommerce's notices for the product (shown above its header).
+.rj-product__notices {
+	display: grid;
+	gap: 0.75rem;
+	padding: 2rem var(--rj-gutter) 0;
+
+	.woocommerce-error,
+	.woocommerce-info,
+	.woocommerce-message {
+		margin: 0;
+		padding: 1rem 1.25rem;
+		border: 2px solid var(--rj-red);
+		border-radius: 20px;
+		background: var(--rj-surface);
+		list-style: none;
+	}
+}
+
+// Products with options: the price range on top, WooCommerce's form below it.
+.rj-product__buy:has(.rj-product__form--native) {
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+// WooCommerce's own form for products with options, in the theme's grammar.
+.rj-product .rj-product__form--native {
+	.variations {
+		margin-block-end: 1rem;
+
+		th,
+		td {
+			padding: 0.4rem 0;
+			text-align: start;
+		}
+
+		label {
+			font-size: 0.72rem;
+			font-weight: 800;
+			letter-spacing: 0.22em;
+			text-transform: uppercase;
+		}
+
+		select {
+			min-block-size: 48px;
+			padding: 0 1rem;
+			border: 2px solid rgb(var(--rj-red-rgb) / 0.6);
+			border-radius: 16px;
+			background: #fdf3f5;
+			color: var(--rj-ink);
+		}
+	}
+
+	.reset_variations {
+		margin-inline-start: 0.75rem;
+		font-size: 0.8rem;
+		color: var(--rj-red);
+		text-decoration: underline;
+	}
+
+	.woocommerce-variation-price {
+		margin-block: 0.25rem 0.75rem;
+		font-family: var(--rj-display);
+		font-size: 1.75rem;
+		color: var(--rj-red);
+	}
+
+	.quantity input.qty {
+		font-size: 1.05rem;
+	}
+
+	.variations_button,
+	form.cart:not(.variations_form) {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.quantity input.qty {
+		inline-size: 5rem;
+		min-block-size: 56px;
+		padding: 0 1rem;
+		border: 2px solid var(--rj-red);
+		border-radius: 999px;
+		background: transparent;
+		font-weight: 800;
+		text-align: center;
+		color: var(--rj-red);
+	}
+
+	button.single_add_to_cart_button {
+		min-block-size: 56px;
+		padding: 0 2.5rem;
+		border: 0;
+		border-radius: 999px;
+		background: var(--rj-red);
+		color: var(--rj-surface);
+		font-size: 0.88rem;
+		font-weight: 800;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		cursor: pointer;
+
+		// Until an option is chosen. WooCommerce only marks it with a class (it
+		// stays focusable and explains itself on click), so it keeps full
+		// contrast: the outlined pill instead of a faded one.
+		// (Selector raised above WooCommerce's ".woocommerce button.button.alt.disabled".)
+		&.button.disabled {
+			border: 2px solid var(--rj-red);
+			background: transparent;
+			color: var(--rj-red);
+			cursor: not-allowed;
+			opacity: 1;
+		}
+	}
+}

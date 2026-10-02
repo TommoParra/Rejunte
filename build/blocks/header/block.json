@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "rejunte/header",
+  "version": "1.0.0",
+  "title": "Cabecera",
+  "category": "rejunte",
+  "icon": "menu",
+  "description": "Marca, enlaces a las secciones y el botón de pedido. Queda fija arriba al hacer scroll; en el móvil los enlaces pasan a un menú desplegable.",
+  "keywords": [
+    "header",
+    "menú",
+    "navegación",
+    "pedido"
+  ],
+  "textdomain": "rejunte",
+  "attributes": {
+    "logo": {
+      "type": "object",
+      "default": {}
+    },
+    "brand": {
+      "type": "string",
+      "default": ""
+    },
+    "brandUrl": {
+      "type": "string",
+      "default": "/"
+    },
+    "navLabel": {
+      "type": "string",
+      "default": "Secciones"
+    },
+    "links": {
+      "type": "array",
+      "default": []
+    },
+    "ctaLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "menuOpenLabel": {
+      "type": "string",
+      "default": "Abrir el menú"
+    },
+    "menuCloseLabel": {
+      "type": "string",
+      "default": "Cerrar el menú"
+    }
+  },
+  "supports": {
+    "html": false,
+    "multiple": false,
+    "reusable": false
+  },
+  "example": {
+    "attributes": {
+      "brand": "REJUNTE",
+      "links": [
+        {
+          "label": "Vitrina",
+          "url": "/#vitrina"
+        },
+        {
+          "label": "La tanda",
+          "url": "/#tanda"
+        }
+      ],
+      "ctaLabel": "Pedir"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "viewScriptModule": "file:./view.js"
+}

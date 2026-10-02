@@ -1,0 +1,65 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "rejunte/encargos",
+  "version": "1.0.0",
+  "title": "Encargos",
+  "category": "rejunte",
+  "icon": "format-chat",
+  "description": "Panel sobre fondo de cuadrillé: texto, sabores, botón para escribir y una foto con forma de arco.",
+  "keywords": [
+    "encargos",
+    "pedido",
+    "whatsapp",
+    "contacto"
+  ],
+  "textdomain": "rejunte",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "text": {
+      "type": "string",
+      "default": ""
+    },
+    "chips": {
+      "type": "array",
+      "default": []
+    },
+    "buttonLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "image": {
+      "type": "object",
+      "default": {}
+    },
+    "photoAnchor": {
+      "type": "string",
+      "default": ""
+    },
+    "headingLevel": {
+      "type": "number",
+      "enum": [
+        1,
+        2
+      ],
+      "default": 2
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css"
+}

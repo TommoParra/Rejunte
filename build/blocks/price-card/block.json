@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "rejunte/price-card",
+  "version": "1.0.0",
+  "title": "Tarjeta de precio",
+  "category": "rejunte",
+  "parent": [
+    "rejunte/precios"
+  ],
+  "icon": "tag",
+  "description": "Un producto con su presentación, descripción, precio y botón para sumarlo al pedido. Conectada a un producto de la tienda, el precio y el botón son los de la tienda.",
+  "textdomain": "rejunte",
+  "attributes": {
+    "productId": {
+      "type": "number",
+      "default": 0
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "kicker": {
+      "type": "string",
+      "default": ""
+    },
+    "name": {
+      "type": "string",
+      "default": ""
+    },
+    "body": {
+      "type": "string",
+      "default": ""
+    },
+    "price": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonLabel": {
+      "type": "string",
+      "default": "Sumar"
+    },
+    "addedLabel": {
+      "type": "string",
+      "default": "Sumado"
+    }
+  },
+  "supports": {
+    "html": false,
+    "reusable": false
+  },
+  "editorScript": "file:./index.js",
+  "viewScriptModule": "file:./view.js"
+}

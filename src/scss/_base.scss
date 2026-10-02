@@ -1,0 +1,128 @@
+// The ground the prototype was designed on: its host application's reset plus
+// the prototype's own normalisation. Element rules use :where() so any class
+// selector in a block overrides them without a specificity fight.
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	min-inline-size: 320px;
+	color-scheme: light;
+	font-synthesis: none;
+	text-rendering: optimizelegibility;
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+	scroll-padding-block-start: var(--rj-nav-height);
+}
+
+body {
+	margin: 0;
+	min-block-size: 100vh;
+	overflow-wrap: break-word;
+	overflow-x: clip;
+	background: var(--rj-pink);
+	color: var(--rj-ink);
+	font-family: var(--rj-body);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.55;
+	letter-spacing: normal;
+}
+
+:where(h1, h2, h3, h4, h5, h6) {
+	max-inline-size: none;
+	margin: 0;
+	font: inherit;
+	font-family: var(--rj-display);
+	font-weight: 800;
+	line-height: 1.12;
+	letter-spacing: -0.05em;
+	color: var(--rj-red);
+	text-wrap: balance;
+}
+
+:where(p, li, figure, blockquote, dl, dd) {
+	max-inline-size: none;
+	margin: 0;
+}
+
+// Lists written in the editor (core/list) keep their markers; structural lists
+// in the theme's blocks do not.
+:where(ul:not(.wp-block-list), ol:not(.wp-block-list)) {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+:where(a) {
+	color: inherit;
+	text-decoration: none;
+}
+
+:where(a:hover) {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+}
+
+// Global styles print the link rule at (0,0,1); match its selector to set the thickness.
+a:where(:not(.wp-element-button)):hover {
+	text-decoration-thickness: 1px;
+}
+
+:where(button, [role="button"]) {
+	min-inline-size: 0;
+	min-block-size: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+	touch-action: manipulation;
+}
+
+:where(input, select, textarea) {
+	color: inherit;
+	font: inherit;
+}
+
+:where(img, picture, svg, canvas, video) {
+	display: block;
+	max-inline-size: 100%;
+}
+
+:where(img) {
+	block-size: auto;
+}
+
+:where(table) {
+	inline-size: 100%;
+	border-collapse: collapse;
+}
+
+:where(:focus-visible) {
+	outline: 2px solid var(--rj-red);
+	outline-offset: 2px;
+}
+
+:where([tabindex="-1"]:focus) {
+	outline: none;
+}
+
+[hidden] {
+	display: none !important;
+}
+
+::selection {
+	background: var(--rj-red);
+	color: var(--rj-surface);
+}
+
+@media (forced-colors: active) {
+	:focus-visible {
+		outline-color: Highlight;
+	}
+}

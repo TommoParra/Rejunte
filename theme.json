@@ -1,0 +1,220 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": false,
+		"useRootPaddingAwareAlignments": false,
+		"border": {
+			"color": false,
+			"radius": false,
+			"style": false,
+			"width": false
+		},
+		"color": {
+			"custom": false,
+			"customDuotone": false,
+			"customGradient": false,
+			"defaultDuotone": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+			"duotone": [],
+			"gradients": [],
+			"link": false,
+			"palette": [
+				{
+					"slug": "pink",
+					"color": "#eab4c0",
+					"name": "Rosa"
+				},
+				{
+					"slug": "mid",
+					"color": "#f0c6cf",
+					"name": "Rosa medio"
+				},
+				{
+					"slug": "surface",
+					"color": "#f6dde3",
+					"name": "Rosa claro"
+				},
+				{
+					"slug": "checker",
+					"color": "#e3a4b2",
+					"name": "Rosa cuadrillé"
+				},
+				{
+					"slug": "red",
+					"color": "#a0122b",
+					"name": "Rojo"
+				},
+				{
+					"slug": "red-deep",
+					"color": "#7c0a1f",
+					"name": "Rojo profundo"
+				},
+				{
+					"slug": "ink",
+					"color": "#8e1026",
+					"name": "Tinta"
+				}
+			]
+		},
+		"layout": {
+			"allowEditing": false
+		},
+		"shadow": {
+			"defaultPresets": false,
+			"presets": []
+		},
+		"spacing": {
+			"blockGap": true,
+			"customSpacingSize": false,
+			"defaultSpacingSizes": false,
+			"margin": false,
+			"padding": false,
+			"spacingSizes": [],
+			"units": [
+				"px",
+				"rem",
+				"%"
+			]
+		},
+		"typography": {
+			"customFontSize": false,
+			"defaultFontSizes": false,
+			"dropCap": false,
+			"fluid": false,
+			"fontStyle": false,
+			"fontWeight": false,
+			"letterSpacing": false,
+			"lineHeight": false,
+			"textDecoration": false,
+			"textTransform": false,
+			"writingMode": false,
+			"fontFamilies": [
+				{
+					"slug": "body",
+					"name": "Figtree · sistema",
+					"fontFamily": "'Figtree', ui-sans-serif, system-ui, 'Segoe UI', sans-serif"
+				},
+				{
+					"slug": "display",
+					"name": "Caprasimo · Rockwell",
+					"fontFamily": "'Caprasimo', Rockwell, 'Arial Rounded MT Bold', Georgia, serif"
+				}
+			],
+			"fontSizes": [
+				{
+					"slug": "small",
+					"size": "0.88rem",
+					"name": "Pequeño"
+				},
+				{
+					"slug": "medium",
+					"size": "1.06rem",
+					"name": "Normal"
+				},
+				{
+					"slug": "large",
+					"size": "1.25rem",
+					"name": "Destacado"
+				}
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--pink)",
+			"text": "var(--wp--preset--color--ink)"
+		},
+		"spacing": {
+			"blockGap": "0px",
+			"padding": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "0px",
+				"left": "0px"
+			}
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--body)",
+			"fontSize": "16px",
+			"fontWeight": "400",
+			"lineHeight": "1.55"
+		},
+		"elements": {
+			"link": {
+				"color": {
+					"text": "inherit"
+				},
+				"typography": {
+					"textDecoration": "none"
+				},
+				":hover": {
+					"typography": {
+						"textDecoration": "underline"
+					}
+				}
+			},
+			"button": {
+				"border": {
+					"radius": "999px",
+					"width": "0"
+				},
+				"color": {
+					"background": "var(--wp--preset--color--red)",
+					"text": "var(--wp--preset--color--surface)"
+				},
+				"spacing": {
+					"padding": {
+						"top": "1.06rem",
+						"right": "2.5rem",
+						"bottom": "1.06rem",
+						"left": "2.5rem"
+					}
+				},
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--body)",
+					"fontSize": "0.88rem",
+					"fontWeight": "800",
+					"letterSpacing": "0.16em",
+					"lineHeight": "1.55",
+					"textDecoration": "none",
+					"textTransform": "uppercase"
+				},
+				":hover": {
+					"color": {
+						"background": "var(--wp--preset--color--red-deep)",
+						"text": "var(--wp--preset--color--surface)"
+					}
+				},
+				":focus": {
+					"color": {
+						"background": "var(--wp--preset--color--red-deep)",
+						"text": "var(--wp--preset--color--surface)"
+					}
+				}
+			}
+		}
+	},
+	"templateParts": [
+		{
+			"area": "header",
+			"name": "header",
+			"title": "Cabecera"
+		},
+		{
+			"area": "footer",
+			"name": "footer",
+			"title": "Pie"
+		}
+	],
+	"customTemplates": [
+		{
+			"name": "page-wide",
+			"title": "Página a todo ancho",
+			"postTypes": [
+				"page"
+			]
+		}
+	]
+}

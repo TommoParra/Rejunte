@@ -1,0 +1,344 @@
+@use "breakpoints" as *;
+
+// Components more than one block draws. Block-specific CSS lives with its block.
+
+// Small uppercase label above headings.
+.rj-eyebrow {
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.26em;
+	text-transform: uppercase;
+	color: var(--rj-red);
+}
+
+// Pill button. Written for <a>, <button> and the editor's <span> alike: the flex
+// centring is what a native <button> does on its own.
+.rj-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-block-size: 56px;
+	padding-inline: 2.5rem;
+	border-radius: 999px;
+	background: var(--rj-red);
+	color: var(--rj-surface);
+	font-size: 0.88rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-align: center;
+	text-transform: uppercase;
+	transition: background-color 0.18s, transform 0.18s;
+
+	&:hover {
+		background: var(--rj-red-deep);
+		color: var(--rj-surface);
+		text-decoration: none;
+		transform: translateY(-2px);
+	}
+
+	&--ghost {
+		min-block-size: 44px;
+		padding-inline: 1.5rem;
+		border: 2px solid var(--rj-red);
+		background: transparent;
+		color: var(--rj-red);
+		font-size: 0.75rem;
+		letter-spacing: 0.18em;
+
+		&:hover {
+			background: var(--rj-red);
+			color: var(--rj-surface);
+			transform: none;
+		}
+	}
+
+	&[aria-busy="true"] {
+		cursor: progress;
+		opacity: 0.7;
+	}
+
+	@include reduced-motion {
+		transition: none;
+
+		&:hover {
+			transform: none;
+		}
+	}
+}
+
+// Underlined uppercase text link.
+.rj-link {
+	padding-block-end: 3px;
+	border-block-end: 2px solid rgb(var(--rj-red-rgb) / 0.35);
+	font-size: 0.88rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+// Outlined pills.
+.rj-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+
+	> li,
+	> .rj-chip {
+		padding: 0.7rem 1.4rem;
+		border: 2px solid rgb(var(--rj-red-rgb) / 0.45);
+		border-radius: 999px;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+}
+
+// Image slot: fills its box, or shows a labelled placeholder in the palette
+// when no image is set, so a section keeps its shape either way.
+.rj-image {
+	position: relative;
+	container-type: inline-size;
+	overflow: hidden;
+	inline-size: 100%;
+	block-size: 100%;
+	background: var(--rj-mid);
+
+	&[data-tone="surface"] {
+		background: var(--rj-surface);
+	}
+
+	&[data-tone="deep"] {
+		background: var(--rj-red);
+	}
+
+	// Two classes, so store stylesheets' "img { height: auto }" cannot win.
+	& &__img {
+		display: block;
+		inline-size: 100%;
+		max-inline-size: none;
+		block-size: 100%;
+		object-fit: cover;
+	}
+
+	&[data-fit="contain"] &__img {
+		object-fit: contain;
+	}
+
+	&__placeholder {
+		position: absolute;
+		inset: 0;
+		display: grid;
+		place-content: center;
+		justify-items: center;
+		gap: 0.5rem;
+		padding: 1rem;
+		color: var(--rj-red);
+		text-align: center;
+	}
+
+	&[data-tone="deep"] &__placeholder {
+		color: var(--rj-surface);
+	}
+
+	&__mark {
+		font-size: 1.35rem;
+	}
+
+	&__label {
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	// In a small slot the caption only produces clipped noise; the mark carries it.
+	@container (max-width: 150px) {
+		&__label {
+			display: none;
+		}
+
+		&__mark {
+			font-size: 1.1rem;
+		}
+	}
+}
+
+// Price card: the front page's price row and every product listing.
+.rj-price {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	min-inline-size: 0;
+	padding: 2.5rem 2.25rem;
+	border-radius: var(--rj-radius);
+	background: var(--rj-surface);
+
+	// Product photo on store cards.
+	&__media {
+		display: block;
+		overflow: hidden;
+		margin: -0.75rem -0.75rem 0.5rem;
+		border-radius: 22px;
+		aspect-ratio: 4 / 3;
+
+		.rj-image {
+			display: block;
+		}
+
+		img {
+			transition: transform 0.5s ease;
+		}
+
+		&:hover img {
+			transform: scale(1.03);
+		}
+
+		@include reduced-motion {
+
+			img {
+				transition: none;
+			}
+
+			&:hover img {
+				transform: none;
+			}
+		}
+	}
+
+	&__name a:hover {
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.12em;
+	}
+
+	&__kicker {
+		font-size: 0.72rem;
+		font-weight: 800;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--rj-ink);
+	}
+
+	&__name {
+		font-size: 1.75rem;
+		line-height: 1.04;
+	}
+
+	&__body {
+		font-size: 1.03rem;
+		font-weight: 500;
+		line-height: 1.7;
+	}
+
+	&__foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-block-start: auto;
+		padding-block-start: 1.5rem;
+	}
+
+	&__amount {
+		font-family: var(--rj-display);
+		font-size: 1.75rem;
+		color: var(--rj-red);
+	}
+
+	&__form {
+		display: contents;
+	}
+}
+
+.rj-price-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 2.1rem;
+
+	@include below($tablet) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+// Hidden until focused: skip link and the motion toggle. They share one spot,
+// since only one of the two has focus at a time.
+.rj-skip-link {
+	position: fixed;
+	z-index: 100;
+	inset-block-start: 0.75rem;
+	inset-inline-start: 0.75rem;
+	display: inline-flex;
+	align-items: center;
+	min-block-size: 48px;
+	padding-inline: 1.5rem;
+	border-radius: 999px;
+	background: var(--rj-red);
+	color: var(--rj-surface);
+	font-size: 0.8rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	transform: translateY(calc(-100% - 1rem));
+
+	&:focus,
+	&:focus-visible {
+		outline: 2px solid var(--rj-red);
+		outline-offset: 3px;
+		text-decoration: none;
+		transform: none;
+	}
+}
+
+.screen-reader-text,
+.rj-visually-hidden {
+	position: absolute !important;
+	overflow: hidden !important;
+	clip: rect(0 0 0 0) !important;
+	clip-path: inset(50%) !important;
+	inline-size: 1px !important;
+	block-size: 1px !important;
+	margin: -1px !important;
+	padding: 0 !important;
+	border: 0 !important;
+	white-space: nowrap !important;
+}
+
+// Polite announcements for actions with no visible confirmation elsewhere.
+.rj-live {
+	@extend .rj-visually-hidden;
+}
+
+@keyframes rj-bob {
+
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(-12px);
+	}
+}
+
+// Store notices (WooCommerce's notice banner), wherever they appear.
+.wc-block-components-notice-banner {
+	border: 2px solid var(--rj-red);
+	border-radius: 20px;
+	background: var(--rj-surface);
+	color: var(--rj-ink);
+
+	> svg {
+		border-radius: 999px;
+		background: var(--rj-red);
+		fill: var(--rj-surface);
+	}
+
+	a {
+		color: var(--rj-red);
+		text-decoration: underline;
+	}
+}
+
+.rj-notices:empty {
+	display: none;
+}

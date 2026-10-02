@@ -1,0 +1,1180 @@
+# Copyright (C) 2026 Rejunte
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Rejunte 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/rejunte\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-02T10:20:54+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: rejunte\n"
+
+#. Theme Name of the theme
+#. Author of the theme
+#: style.css
+#: inc/blocks.php:77
+#: inc/blocks.php:157
+msgid "Rejunte"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://rejunte.local"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Pastelería argentina en Barcelona. Block theme built from the Rejunte prototype: every section is a Gutenberg block that edits in place, renders the same in the editor and on the site, and ships almost no JavaScript."
+msgstr ""
+
+#: inc/accessibility.php:33
+msgid "Saltar al contenido"
+msgstr ""
+
+#: inc/accessibility.php:37
+msgid "Pausar animaciones"
+msgstr ""
+
+#: inc/contact.php:28
+#: inc/contact.php:114
+msgid "¡Hola Rejunte! Quiero hacer este pedido:"
+msgstr ""
+
+#: inc/contact.php:29
+#: inc/contact.php:132
+msgid "¿Cuándo lo puedo pasar a buscar?"
+msgstr ""
+
+#: inc/contact.php:81
+msgid "Datos de contacto"
+msgstr ""
+
+#: inc/contact.php:82
+msgid "El WhatsApp al que llegan los pedidos y las consultas. Todos los enlaces a WhatsApp de la web usan este número."
+msgstr ""
+
+#: inc/contact.php:99
+msgid "WhatsApp para pedidos"
+msgstr ""
+
+#. translators: %s: fallback phone number.
+#: inc/contact.php:101
+#, php-format
+msgid "Con el código de país. Vacío, se usa %s."
+msgstr ""
+
+#: inc/contact.php:122
+msgid "Inicio del mensaje del pedido"
+msgstr ""
+
+#: inc/contact.php:123
+msgid "Va antes de la lista de productos."
+msgstr ""
+
+#: inc/contact.php:140
+msgid "Final del mensaje del pedido"
+msgstr ""
+
+#: inc/contact.php:141
+msgid "Va después del total. Puede quedar vacío."
+msgstr ""
+
+#: inc/contact.php:159
+msgid "Cerrar los pedidos por WhatsApp"
+msgstr ""
+
+#: inc/contact.php:160
+msgid "El botón del carrito abre WhatsApp con el pedido escrito, en lugar de ir al pago. Desactivalo cuando haya una pasarela de pago."
+msgstr ""
+
+#: inc/contact.php:195
+msgid "Pedidos y encargos por WhatsApp"
+msgstr ""
+
+#: inc/contact.php:214
+#: inc/llms.php:76
+msgid "Datos"
+msgstr ""
+
+#. translators: 1: phone number, 2: wa.me link.
+#: inc/contact.php:217
+#, php-format
+msgid "- Pedidos y encargos por WhatsApp: %1$s (%2$s)"
+msgstr ""
+
+#. translators: %s: postal address.
+#: inc/llms.php:58
+#, php-format
+msgid "Dirección: %s"
+msgstr ""
+
+#. translators: %s: opening hours, e.g. "Jueves a domingo, 16 a 20 h".
+#: inc/llms.php:64
+#, php-format
+msgid "Retiro: %s"
+msgstr ""
+
+#. translators: %s: phone number.
+#: inc/llms.php:68
+#, php-format
+msgid "Teléfono: %s"
+msgstr ""
+
+#: inc/llms.php:98
+msgid "Páginas"
+msgstr ""
+
+#: inc/llms.php:99
+msgid "Inicio"
+msgstr ""
+
+#: inc/seo.php:102
+msgid "Rejunte, pastelería argentina en Barcelona"
+msgstr ""
+
+#: inc/seo.php:195
+msgid "Pastelería argentina"
+msgstr ""
+
+#: inc/seo.php:350
+msgid "Precios"
+msgstr ""
+
+#: inc/setup.php:71
+msgid "Mediano (600px)"
+msgstr ""
+
+#: inc/woocommerce.php:55
+#: src/blocks/price-card/edit.js:91
+#: src/blocks/product-hero/edit.js:111
+msgid "Presentación"
+msgstr ""
+
+#: inc/woocommerce.php:56
+msgid "Docena, media docena, 18 cm · 10 porciones…"
+msgstr ""
+
+#: inc/woocommerce.php:58
+msgid "Se muestra en pequeño sobre el nombre del producto."
+msgstr ""
+
+#: inc/woocommerce.php:106
+msgid "Sumar al pedido"
+msgstr ""
+
+#. translators: 1: product name, 2: units in the order.
+#: inc/woocommerce.php:178
+#, php-format
+msgid "%1$s: %2$s en el pedido"
+msgstr ""
+
+#: inc/woocommerce.php:253
+#: inc/woocommerce.php:491
+msgid "Elegir"
+msgstr ""
+
+#: inc/woocommerce.php:290
+#: inc/woocommerce.php:489
+msgid "Agotado"
+msgstr ""
+
+#: inc/woocommerce.php:537
+msgid "Todo"
+msgstr ""
+
+#: inc/woocommerce.php:548
+msgid "Categorías"
+msgstr ""
+
+#: inc/woocommerce.php:563
+msgid "Anteriores"
+msgstr ""
+
+#: inc/woocommerce.php:564
+msgid "Siguientes"
+msgstr ""
+
+#: inc/woocommerce.php:568
+msgid "Páginas de la vitrina"
+msgstr ""
+
+#: inc/woocommerce.php:788
+msgid "Productos"
+msgstr ""
+
+#: inc/woocommerce.php:794
+msgid "agotado"
+msgstr ""
+
+#. translators: %s: cart URL.
+#: inc/woocommerce.php:809
+#, php-format
+msgid "Los pedidos se hacen en la tienda (%s) y se retiran en el taller."
+msgstr ""
+
+#. translators: %s: order total.
+#: inc/woocommerce.php:892
+#, php-format
+msgid "Total: %s"
+msgstr ""
+
+#: inc/woocommerce.php:930
+msgid "Enlace a WhatsApp con el pedido escrito."
+msgstr ""
+
+#: inc/woocommerce.php:1042
+msgid "Pedir por WhatsApp"
+msgstr ""
+
+#: patterns/not-found.php
+msgctxt "Pattern title"
+msgid "Página no encontrada"
+msgstr ""
+
+#: patterns/not-found.php
+msgctxt "Pattern description"
+msgid "La portada de la tienda adaptada a una página que no existe."
+msgstr ""
+
+#: patterns/ticker.php
+msgctxt "Pattern title"
+msgid "Cinta de productos"
+msgstr ""
+
+#: patterns/ticker.php
+msgctxt "Pattern description"
+msgid "La cinta roja de la portada, con los productos de la casa."
+msgstr ""
+
+#: src/blocks/product-grid/render.php:35
+msgid "Por ahora no hay nada en la vitrina."
+msgstr ""
+
+#. translators: %d: photo number.
+#: src/blocks/product-hero/render.php:99
+#, php-format
+msgid "Ver la foto %d"
+msgstr ""
+
+#: src/blocks/product-hero/render.php:110
+#: src/blocks/product-hero/edit.js:82
+msgid "Migas de pan"
+msgstr ""
+
+#: src/blocks/product-hero/render.php:137
+msgid "Uno menos"
+msgstr ""
+
+#: src/blocks/product-hero/render.php:138
+#: src/blocks/product-grid/edit.js:51
+msgid "Cantidad"
+msgstr ""
+
+#: src/blocks/product-hero/render.php:150
+msgid "Uno más"
+msgstr ""
+
+#: src/blocks/product-hero/render.php:164
+msgid "Agotado por esta semana"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:10
+#: src/blocks/bento-tile/edit.js:65
+#: src/blocks/encargos/edit.js:33
+msgid "Foto"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:11
+#: src/blocks/ticker/edit.js:43
+msgid "Palabra"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:12
+msgid "Dato destacado"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:16
+msgid "1 × 1"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:17
+msgid "2 × 1 (ancho)"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:18
+msgid "2 × 2 (grande)"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:33
+msgid "Tipo de pieza"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:43
+msgid "Tamaño en el mosaico"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:53
+msgid "Tamaño de la palabra"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:55
+msgid "Normal"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:56
+msgid "Grande"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:70
+#: src/blocks/header/edit.js:113
+#: src/blocks/precios/edit.js:32
+#: src/blocks/tanda/edit.js:147
+msgid "Accesibilidad"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:73
+msgid "Cómo se lee"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:74
+msgid "La palabra se parte en sílabas para el ojo; esto es lo que oye un lector de pantalla."
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:104
+msgid "PALABRA"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:110
+#: src/blocks/encargos/edit.js:57
+#: src/blocks/hero/edit.js:59
+#: src/blocks/tanda/edit.js:156
+#: src/blocks/vitrina/edit.js:71
+msgid "Antetítulo"
+msgstr ""
+
+#: src/blocks/bento-tile/edit.js:111
+#: src/blocks/product-hero/edit.js:135
+msgid "Dato"
+msgstr ""
+
+#: src/blocks/encargos/edit.js:21
+#: src/blocks/hero/edit.js:20
+msgid "Destino del botón"
+msgstr ""
+
+#: src/blocks/encargos/edit.js:30
+#: src/blocks/encargos/edit.js:58
+#: src/blocks/footer/edit.js:77
+#: src/blocks/tanda/edit.js:103
+#: src/blocks/tanda/edit.js:157
+#: src/blocks/vitrina/edit.js:52
+#: src/blocks/vitrina/edit.js:72
+msgid "Título"
+msgstr ""
+
+#: src/blocks/encargos/edit.js:37
+msgid "Ancla de la foto"
+msgstr ""
+
+#: src/blocks/encargos/edit.js:38
+msgid "Para enlazar directo a la foto, como «El taller» en la cabecera (#taller)."
+msgstr ""
+
+#: src/blocks/encargos/edit.js:43
+#: src/blocks/encargos/edit.js:82
+#: src/blocks/hero/edit.js:88
+#: src/blocks/price-card/edit.js:71
+#: src/blocks/product-hero/edit.js:48
+msgid "Botón"
+msgstr ""
+
+#: src/blocks/encargos/edit.js:46
+#: src/blocks/header/edit.js:30
+#: src/blocks/header/edit.js:100
+#: src/blocks/hero/edit.js:98
+#: src/shared/editor/index.js:113
+msgid "Enlace"
+msgstr ""
+
+#: src/blocks/encargos/edit.js:47
+msgid "Por ejemplo https://wa.me/34600000000 para abrir WhatsApp."
+msgstr ""
+
+#: src/blocks/encargos/edit.js:59
+#: src/blocks/vitrina/edit.js:74
+msgid "Texto"
+msgstr ""
+
+#: src/blocks/encargos/edit.js:67
+msgid "Sabor"
+msgstr ""
+
+#: src/blocks/encargos/edit.js:71
+#: src/blocks/product-hero/edit.js:136
+#: src/blocks/ticker/edit.js:47
+#: src/shared/editor/index.js:65
+msgid "Quitar"
+msgstr ""
+
+#: src/blocks/encargos/edit.js:74
+msgid "Añadir sabor"
+msgstr ""
+
+#: src/blocks/footer/edit.js:23
+#: src/blocks/header/edit.js:82
+msgid "Logo"
+msgstr ""
+
+#: src/blocks/footer/edit.js:27
+#: src/blocks/header/edit.js:86
+msgid "El logo va junto al nombre escrito, así que es decorativo: déjalo vacío."
+msgstr ""
+
+#: src/blocks/footer/edit.js:30
+msgid "Columnas"
+msgstr ""
+
+#: src/blocks/footer/edit.js:32
+msgid "Añadir columna"
+msgstr ""
+
+#: src/blocks/footer/edit.js:35
+msgid "Datos para buscadores"
+msgstr ""
+
+#: src/blocks/footer/edit.js:37
+msgid "La dirección (calle y una línea «código postal + ciudad»), el horario («Jueves a domingo», «16 a 20 h»), el teléfono y los enlaces a redes se leen de las líneas del pie."
+msgstr ""
+
+#: src/blocks/footer/edit.js:41
+msgid "País"
+msgstr ""
+
+#: src/blocks/footer/edit.js:67
+#: src/blocks/header/edit.js:154
+msgid "Marca"
+msgstr ""
+
+#: src/blocks/footer/edit.js:68
+#: src/blocks/price-card/edit.js:93
+msgid "Descripción"
+msgstr ""
+
+#: src/blocks/footer/edit.js:87
+msgid "Línea"
+msgstr ""
+
+#: src/blocks/footer/edit.js:91
+msgid "Quitar línea"
+msgstr ""
+
+#: src/blocks/footer/edit.js:97
+msgid "Añadir línea"
+msgstr ""
+
+#: src/blocks/footer/edit.js:98
+msgid "Quitar columna"
+msgstr ""
+
+#: src/blocks/header/edit.js:37
+msgid "Quitar enlace"
+msgstr ""
+
+#: src/blocks/header/edit.js:46
+msgid "Añadir enlace"
+msgstr ""
+
+#. translators: %s: link label.
+#: src/blocks/header/edit.js:64
+#, js-format
+msgid "Destino de «%s»"
+msgstr ""
+
+#: src/blocks/header/edit.js:73
+msgid "Destino del botón de pedido"
+msgstr ""
+
+#: src/blocks/header/edit.js:90
+msgid "Enlace de la marca"
+msgstr ""
+
+#: src/blocks/header/edit.js:95
+msgid "Enlaces y botón"
+msgstr ""
+
+#: src/blocks/header/edit.js:107
+msgid "Botón de pedido (con el pedido vacío)"
+msgstr ""
+
+#: src/blocks/header/edit.js:108
+msgid "Con productos en el pedido, el botón lleva al carrito."
+msgstr ""
+
+#: src/blocks/header/edit.js:116
+msgid "Nombre de la navegación"
+msgstr ""
+
+#: src/blocks/header/edit.js:122
+msgid "Botón de menú: abrir"
+msgstr ""
+
+#: src/blocks/header/edit.js:128
+msgid "Botón de menú: cerrar"
+msgstr ""
+
+#: src/blocks/header/edit.js:168
+msgid "Pedir"
+msgstr ""
+
+#: src/blocks/hero/edit.js:27
+msgid "Destino del enlace"
+msgstr ""
+
+#: src/blocks/hero/edit.js:36
+msgid "Imagen"
+msgstr ""
+
+#: src/blocks/hero/edit.js:68
+msgid "Titular"
+msgstr ""
+
+#: src/blocks/hero/edit.js:77
+msgid "Entradilla"
+msgstr ""
+
+#: src/blocks/precios/edit.js:26
+msgid "Añadir tarjeta"
+msgstr ""
+
+#: src/blocks/precios/edit.js:35
+msgid "Nombre de la sección"
+msgstr ""
+
+#: src/blocks/precios/edit.js:36
+msgid "La sección no tiene título visible; así la anuncia un lector de pantalla."
+msgstr ""
+
+#: src/blocks/price-card/edit.js:58
+msgid "Producto"
+msgstr ""
+
+#: src/blocks/price-card/edit.js:62
+msgid "El precio y el botón pasan a ser los de la tienda: «Sumar» lo añade al carrito."
+msgstr ""
+
+#: src/blocks/price-card/edit.js:66
+msgid "Ese producto ya no existe en la tienda."
+msgstr ""
+
+#: src/blocks/price-card/edit.js:74
+msgid "Texto después de sumar"
+msgstr ""
+
+#: src/blocks/price-card/edit.js:75
+msgid "Se muestra con la cantidad: «Sumado · 2»."
+msgstr ""
+
+#: src/blocks/price-card/edit.js:82
+msgid "Enlace del nombre"
+msgstr ""
+
+#: src/blocks/price-card/edit.js:92
+msgid "Nombre"
+msgstr ""
+
+#: src/blocks/price-card/edit.js:96
+msgid "Precio de la tienda"
+msgstr ""
+
+#: src/blocks/price-card/edit.js:117
+msgid "Sumar"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:22
+msgid "Qué productos"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:25
+msgid "Mostrar"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:28
+msgid "Los de la página (tienda, categoría, búsqueda)"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:29
+msgid "Relacionados con este producto"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:30
+msgid "Los primeros de la vitrina"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:31
+msgid "Los de una categoría"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:38
+#: src/blocks/product-hero/edit.js:88
+msgid "Categoría"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:46
+msgid "Mostrar las categorías encima"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:59
+msgid "Antetítulo (opcional)"
+msgstr ""
+
+#: src/blocks/product-grid/edit.js:60
+msgid "Título (opcional)"
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:47
+msgid "Textos de la plantilla"
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:49
+msgid "Botón con el producto ya en el pedido"
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:50
+msgid "Nombre de la tienda en las migas"
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:66
+msgid "Foto del producto"
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:95
+#: src/blocks/product-hero/edit.js:110
+msgid "Nombre del producto"
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:101
+msgid "Presentación (docena, 18 cm…)"
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:105
+msgid "Descripción corta"
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:113
+msgid "La descripción corta del producto."
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:119
+msgid "Precio de la tienda: se cambia en «Datos del producto»"
+msgstr ""
+
+#: src/blocks/product-hero/edit.js:139
+msgid "Añadir dato"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:73
+msgid "Añadir fotos"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:82
+msgid "Mover la foto a la izquierda"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:87
+msgid "Mover la foto a la derecha"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:92
+msgid "Quitar esta foto"
+msgstr ""
+
+#. translators: 1: position, 2: total.
+#: src/blocks/tanda/edit.js:110
+#, js-format
+msgid "Foto %1$d de %2$d"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:118
+#: src/blocks/ticker/edit.js:21
+msgid "Movimiento"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:121
+msgid "Curvatura"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:130
+msgid "Velocidad de arrastre"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:139
+msgid "Suavidad"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:148
+msgid "Descripción de la galería"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:149
+msgid "Botón anterior"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:150
+msgid "Botón siguiente"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:174
+msgid "Cambiar foto"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:196
+msgid "Pie de foto"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:200
+msgid "Añadí fotos desde la barra de herramientas"
+msgstr ""
+
+#: src/blocks/tanda/edit.js:207
+msgid "Indicación"
+msgstr ""
+
+#: src/blocks/ticker/edit.js:24
+msgid "Segundos por vuelta"
+msgstr ""
+
+#: src/blocks/ticker/edit.js:53
+msgid "Añadir palabra"
+msgstr ""
+
+#: src/blocks/vitrina/edit.js:45
+msgid "Añadir mosaico"
+msgstr ""
+
+#: src/blocks/vitrina/edit.js:55
+msgid "Efectos del mosaico"
+msgstr ""
+
+#: src/blocks/vitrina/edit.js:56
+msgid "Foco que sigue al cursor"
+msgstr ""
+
+#: src/blocks/vitrina/edit.js:57
+msgid "Brillo en el borde al acercarse"
+msgstr ""
+
+#: src/blocks/vitrina/edit.js:58
+msgid "Inclinación"
+msgstr ""
+
+#: src/blocks/vitrina/edit.js:59
+msgid "Atracción hacia el cursor"
+msgstr ""
+
+#: src/blocks/vitrina/edit.js:60
+msgid "Onda al hacer clic"
+msgstr ""
+
+#: src/blocks/vitrina/edit.js:61
+msgid "Radio del foco (px)"
+msgstr ""
+
+#: src/blocks/vitrina/edit.js:63
+msgid "Los efectos solo se ven en la página, con ratón, y nunca si el visitante pidió movimiento reducido."
+msgstr ""
+
+#: src/shared/editor/index.js:55
+msgid "Cambiar imagen"
+msgstr ""
+
+#: src/shared/editor/index.js:55
+msgid "Elegir imagen"
+msgstr ""
+
+#: src/shared/editor/index.js:65
+msgid "Usar la del tema"
+msgstr ""
+
+#: src/shared/editor/index.js:88
+msgid "Texto alternativo"
+msgstr ""
+
+#: src/shared/editor/index.js:89
+msgid "Describe la foto para quien no la ve. Déjalo vacío si es decorativa."
+msgstr ""
+
+#: src/shared/editor/index.js:147
+msgid "Nivel del título"
+msgstr ""
+
+#: src/shared/editor/index.js:148
+msgid "H1 solo si esta sección abre la página: cada página tiene un único H1."
+msgstr ""
+
+#: src/shared/editor/index.js:151
+msgid "H1 · título de la página"
+msgstr ""
+
+#: src/shared/editor/index.js:152
+msgid "H2 · sección"
+msgstr ""
+
+#: src/shared/editor/product.js:100
+msgid "Producto de la tienda"
+msgstr ""
+
+#: src/blocks/bento-tile/block.json
+msgctxt "block title"
+msgid "Mosaico"
+msgstr ""
+
+#: src/blocks/bento-tile/block.json
+msgctxt "block description"
+msgid "Una pieza de la vitrina: una foto, una palabra grande o un dato destacado."
+msgstr ""
+
+#: src/blocks/encargos/block.json
+msgctxt "block title"
+msgid "Encargos"
+msgstr ""
+
+#: src/blocks/encargos/block.json
+msgctxt "block description"
+msgid "Panel sobre fondo de cuadrillé: texto, sabores, botón para escribir y una foto con forma de arco."
+msgstr ""
+
+#: src/blocks/encargos/block.json
+msgctxt "block keyword"
+msgid "encargos"
+msgstr ""
+
+#: src/blocks/encargos/block.json
+#: src/blocks/header/block.json
+msgctxt "block keyword"
+msgid "pedido"
+msgstr ""
+
+#: src/blocks/encargos/block.json
+msgctxt "block keyword"
+msgid "whatsapp"
+msgstr ""
+
+#: src/blocks/encargos/block.json
+#: src/blocks/footer/block.json
+msgctxt "block keyword"
+msgid "contacto"
+msgstr ""
+
+#: src/blocks/footer/block.json
+msgctxt "block title"
+msgid "Pie"
+msgstr ""
+
+#: src/blocks/footer/block.json
+msgctxt "block description"
+msgid "Marca, descripción y columnas de datos (retiro, redes). La dirección, el horario, el teléfono y las redes que se escriban aquí son también los que se dan a buscadores y asistentes."
+msgstr ""
+
+#: src/blocks/footer/block.json
+msgctxt "block keyword"
+msgid "footer"
+msgstr ""
+
+#: src/blocks/footer/block.json
+msgctxt "block keyword"
+msgid "pie"
+msgstr ""
+
+#: src/blocks/footer/block.json
+msgctxt "block keyword"
+msgid "horario"
+msgstr ""
+
+#: src/blocks/header/block.json
+msgctxt "block title"
+msgid "Cabecera"
+msgstr ""
+
+#: src/blocks/header/block.json
+msgctxt "block description"
+msgid "Marca, enlaces a las secciones y el botón de pedido. Queda fija arriba al hacer scroll; en el móvil los enlaces pasan a un menú desplegable."
+msgstr ""
+
+#: src/blocks/header/block.json
+msgctxt "block keyword"
+msgid "header"
+msgstr ""
+
+#: src/blocks/header/block.json
+msgctxt "block keyword"
+msgid "menú"
+msgstr ""
+
+#: src/blocks/header/block.json
+msgctxt "block keyword"
+msgid "navegación"
+msgstr ""
+
+#: src/blocks/hero/block.json
+msgctxt "block title"
+msgid "Portada"
+msgstr ""
+
+#: src/blocks/hero/block.json
+msgctxt "block description"
+msgid "Logo, titular, entradilla y dos llamadas a la acción. La imagen se carga con prioridad: es lo primero que se ve."
+msgstr ""
+
+#: src/blocks/hero/block.json
+msgctxt "block keyword"
+msgid "hero"
+msgstr ""
+
+#: src/blocks/hero/block.json
+msgctxt "block keyword"
+msgid "portada"
+msgstr ""
+
+#: src/blocks/hero/block.json
+msgctxt "block keyword"
+msgid "inicio"
+msgstr ""
+
+#: src/blocks/precios/block.json
+msgctxt "block title"
+msgid "Precios"
+msgstr ""
+
+#: src/blocks/precios/block.json
+msgctxt "block description"
+msgid "Fila de tarjetas con precio y botón para sumar al pedido."
+msgstr ""
+
+#: src/blocks/precios/block.json
+msgctxt "block keyword"
+msgid "precios"
+msgstr ""
+
+#: src/blocks/precios/block.json
+#: src/blocks/product-grid/block.json
+msgctxt "block keyword"
+msgid "productos"
+msgstr ""
+
+#: src/blocks/precios/block.json
+msgctxt "block keyword"
+msgid "tarjetas"
+msgstr ""
+
+#: src/blocks/price-card/block.json
+msgctxt "block title"
+msgid "Tarjeta de precio"
+msgstr ""
+
+#: src/blocks/price-card/block.json
+msgctxt "block description"
+msgid "Un producto con su presentación, descripción, precio y botón para sumarlo al pedido. Conectada a un producto de la tienda, el precio y el botón son los de la tienda."
+msgstr ""
+
+#: src/blocks/product-grid/block.json
+msgctxt "block title"
+msgid "Productos"
+msgstr ""
+
+#: src/blocks/product-grid/block.json
+msgctxt "block description"
+msgid "Productos de la tienda en tarjetas de precio con foto. Muestra los de la página (tienda, categoría, búsqueda), los relacionados con el producto o los primeros de la vitrina."
+msgstr ""
+
+#: src/blocks/product-grid/block.json
+#: src/blocks/product-hero/block.json
+msgctxt "block keyword"
+msgid "tienda"
+msgstr ""
+
+#: src/blocks/product-grid/block.json
+#: src/blocks/product-hero/block.json
+msgctxt "block keyword"
+msgid "woocommerce"
+msgstr ""
+
+#: src/blocks/product-grid/block.json
+#: src/blocks/vitrina/block.json
+msgctxt "block keyword"
+msgid "vitrina"
+msgstr ""
+
+#: src/blocks/product-hero/block.json
+msgctxt "block title"
+msgid "Producto"
+msgstr ""
+
+#: src/blocks/product-hero/block.json
+msgctxt "block description"
+msgid "La cabecera de la página de un producto: foto, migas, nombre, presentación, descripción corta, precio y el formulario para sumarlo al pedido. Toma los datos del producto."
+msgstr ""
+
+#: src/blocks/product-hero/block.json
+msgctxt "block keyword"
+msgid "producto"
+msgstr ""
+
+#: src/blocks/tanda/block.json
+msgctxt "block title"
+msgid "La tanda"
+msgstr ""
+
+#: src/blocks/tanda/block.json
+msgctxt "block description"
+msgid "Lo que sale del horno esta semana, en una galería curva que se arrastra, se recorre con las flechas del teclado o con los botones."
+msgstr ""
+
+#: src/blocks/tanda/block.json
+msgctxt "block keyword"
+msgid "galería"
+msgstr ""
+
+#: src/blocks/tanda/block.json
+msgctxt "block keyword"
+msgid "carrusel"
+msgstr ""
+
+#: src/blocks/tanda/block.json
+msgctxt "block keyword"
+msgid "fotos"
+msgstr ""
+
+#: src/blocks/tanda/block.json
+msgctxt "block keyword"
+msgid "tanda"
+msgstr ""
+
+#: src/blocks/ticker/block.json
+msgctxt "block title"
+msgid "Cinta"
+msgstr ""
+
+#: src/blocks/ticker/block.json
+msgctxt "block description"
+msgid "Cinta roja con palabras en movimiento. Es decorativa: los lectores de pantalla la saltan, se detiene al pasar el ratón y con la preferencia de movimiento reducido."
+msgstr ""
+
+#: src/blocks/ticker/block.json
+msgctxt "block keyword"
+msgid "marquee"
+msgstr ""
+
+#: src/blocks/ticker/block.json
+msgctxt "block keyword"
+msgid "ticker"
+msgstr ""
+
+#: src/blocks/ticker/block.json
+msgctxt "block keyword"
+msgid "cinta"
+msgstr ""
+
+#: src/blocks/vitrina/block.json
+msgctxt "block title"
+msgid "La vitrina"
+msgstr ""
+
+#: src/blocks/vitrina/block.json
+msgctxt "block description"
+msgid "Titular, texto y un mosaico de fotos y palabras que responde al cursor."
+msgstr ""
+
+#: src/blocks/vitrina/block.json
+msgctxt "block keyword"
+msgid "bento"
+msgstr ""
+
+#: src/blocks/vitrina/block.json
+msgctxt "block keyword"
+msgid "mosaico"
+msgstr ""
+
+#: src/blocks/vitrina/block.json
+msgctxt "block keyword"
+msgid "grid"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Rosa"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Rosa medio"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Rosa claro"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Rosa cuadrillé"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Rojo"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Rojo profundo"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Tinta"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Figtree · sistema"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Caprasimo · Rockwell"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Pequeño"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Normal"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Destacado"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Cabecera"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Pie"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Página a todo ancho"
+msgstr ""

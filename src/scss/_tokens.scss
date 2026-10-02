@@ -1,0 +1,25 @@
+// Design tokens. Colours and families come from theme.json presets, so a change
+// in Global Styles flows through every block; the literal after each comma is
+// the prototype value, used if a preset is ever removed.
+:root {
+	--rj-pink: var(--wp--preset--color--pink, #eab4c0);
+	--rj-mid: var(--wp--preset--color--mid, #f0c6cf);
+	--rj-surface: var(--wp--preset--color--surface, #f6dde3);
+	--rj-checker: var(--wp--preset--color--checker, #e3a4b2);
+	--rj-red: var(--wp--preset--color--red, #a0122b);
+	--rj-red-deep: var(--wp--preset--color--red-deep, #7c0a1f);
+	--rj-ink: var(--wp--preset--color--ink, #8e1026);
+	--rj-red-rgb: 160 18 43;
+	--rj-shadow-rgb: 124 10 31;
+	--rj-gutter: clamp(1.5rem, 5vw, 4.75rem);
+	--rj-body: var(--wp--preset--font-family--body, "Figtree", ui-sans-serif, system-ui, "Segoe UI", sans-serif);
+	--rj-display: var(--wp--preset--font-family--display, "Caprasimo", Rockwell, "Arial Rounded MT Bold", Georgia, serif);
+	--rj-radius: 30px;
+
+	// Height of the sticky header, so in-page anchors land just below it.
+	--rj-nav-height: 113px;
+
+	@media (max-width: 62rem) {
+		--rj-nav-height: 84px;
+	}
+}

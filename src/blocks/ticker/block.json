@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rejunte/ticker",
+	"version": "1.0.0",
+	"title": "Cinta",
+	"category": "rejunte",
+	"icon": "leftright",
+	"description": "Cinta roja con palabras en movimiento. Es decorativa: los lectores de pantalla la saltan, se detiene al pasar el ratón y con la preferencia de movimiento reducido.",
+	"keywords": [ "marquee", "ticker", "cinta" ],
+	"textdomain": "rejunte",
+	"attributes": {
+		"items": { "type": "array", "default": [] },
+		"duration": { "type": "number", "default": 34 }
+	},
+	"supports": {
+		"html": false
+	},
+	"example": {
+		"attributes": { "items": [ "Alfajores de maicena", "Medialunas", "Lemon pie" ] }
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

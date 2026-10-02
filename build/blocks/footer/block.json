@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "rejunte/footer",
+  "version": "1.0.0",
+  "title": "Pie",
+  "category": "rejunte",
+  "icon": "align-wide",
+  "description": "Marca, descripción y columnas de datos (retiro, redes). La dirección, el horario, el teléfono y las redes que se escriban aquí son también los que se dan a buscadores y asistentes.",
+  "keywords": [
+    "footer",
+    "pie",
+    "contacto",
+    "horario"
+  ],
+  "textdomain": "rejunte",
+  "attributes": {
+    "logo": {
+      "type": "object",
+      "default": {}
+    },
+    "name": {
+      "type": "string",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "default": ""
+    },
+    "columns": {
+      "type": "array",
+      "default": []
+    },
+    "country": {
+      "type": "string",
+      "default": "ES"
+    }
+  },
+  "supports": {
+    "html": false,
+    "multiple": false,
+    "reusable": false
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css"
+}

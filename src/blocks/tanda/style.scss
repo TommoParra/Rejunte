@@ -1,0 +1,122 @@
+@use "../../scss/breakpoints" as *;
+
+.rj-tanda {
+	display: grid;
+	gap: 3.25rem;
+	justify-items: center;
+	padding: 0 var(--rj-gutter) 7.5rem;
+}
+
+.rj-tanda__head {
+	display: grid;
+	gap: 0.9rem;
+	justify-items: center;
+	text-align: center;
+}
+
+.rj-tanda__title {
+	font-size: clamp(2rem, 4vw, 2.9rem);
+	line-height: 1;
+}
+
+.rj-tanda__hint {
+	font-size: 0.8rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--rj-ink);
+}
+
+// Gallery.
+.rj-gallery {
+	display: grid;
+	gap: 1.5rem;
+	justify-items: center;
+	inline-size: 100%;
+}
+
+.rj-gallery__stage {
+	position: relative;
+	overflow: hidden;
+	inline-size: 100%;
+	block-size: 420px;
+	perspective: 1100px;
+	cursor: grab;
+	touch-action: pan-y;
+
+	&[data-dragging="true"] {
+		cursor: grabbing;
+	}
+
+	&:focus-visible {
+		border-radius: 24px;
+		outline: 3px solid var(--rj-red);
+		outline-offset: 4px;
+	}
+}
+
+.rj-gallery__track {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+}
+
+.rj-gallery__item {
+	position: absolute;
+	overflow: hidden;
+	inline-size: 250px;
+	border: 5px solid var(--rj-pink);
+	border-radius: 26px;
+	box-shadow: 0 14px 34px rgb(var(--rj-shadow-rgb) / 0.22);
+	will-change: transform;
+	user-select: none;
+	-webkit-user-drag: none;
+
+	&[aria-current="true"] {
+		box-shadow: 0 20px 48px rgb(var(--rj-shadow-rgb) / 0.32);
+	}
+
+	img {
+		-webkit-user-drag: none;
+	}
+}
+
+.rj-gallery__controls {
+	display: flex;
+	align-items: center;
+	gap: 1.25rem;
+
+	> button {
+		inline-size: 46px;
+		block-size: 46px;
+		border: 2px solid var(--rj-red);
+		border-radius: 999px;
+		color: var(--rj-red);
+		font-size: 1.05rem;
+		line-height: 1;
+		transition: background-color 0.18s, color 0.18s;
+
+		&:hover {
+			background: var(--rj-red);
+			color: var(--rj-surface);
+		}
+	}
+}
+
+.rj-gallery__caption {
+	min-inline-size: 16ch;
+	font-size: 0.78rem;
+	font-weight: 700;
+	letter-spacing: 0.16em;
+	text-align: center;
+	text-transform: uppercase;
+	color: var(--rj-red);
+}
+
+@include reduced-motion {
+	.rj-gallery__item,
+	.rj-gallery__controls > button {
+		transition: none;
+	}
+}

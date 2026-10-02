@@ -1,0 +1,96 @@
+@use "breakpoints" as *;
+
+// Template-level layout: how the parts sit together, and the shared page shell
+// used by every template other than the front page.
+
+// The header template part wraps the sticky header. A wrapper only as tall as
+// the header would leave `position: sticky` nothing to stick within, so the
+// wrapper steps out of the box tree and the header sticks to the whole page.
+.rj-part--header {
+	display: contents;
+}
+
+.rj-main {
+	display: block;
+}
+
+// Page shell: a heading band, then the content on a surface panel.
+.rj-page {
+	display: grid;
+	gap: 3.5rem;
+	padding: 4.4rem var(--rj-gutter) 7.5rem;
+
+	@include below($phone) {
+		gap: 2.25rem;
+		padding-block: 2.5rem 5rem;
+	}
+}
+
+.rj-page__head {
+	display: grid;
+	gap: 1rem;
+	justify-items: start;
+	max-inline-size: 760px;
+
+	.wp-block-post-title,
+	.rj-page__title {
+		font-size: clamp(2.6rem, 6vw, 4.5rem);
+		line-height: 0.98;
+		letter-spacing: -0.01em;
+	}
+}
+
+.rj-page__lead {
+	max-inline-size: 560px;
+	font-size: 1.25rem;
+	font-weight: 500;
+	line-height: 1.7;
+	text-wrap: pretty;
+}
+
+.rj-panel {
+	padding: 4rem;
+	border-radius: 44px;
+	background: var(--rj-surface);
+
+	@include below($tablet) {
+		padding: 2.25rem;
+	}
+
+	@include below($phone) {
+		padding: 1.5rem;
+		border-radius: var(--rj-radius);
+	}
+}
+
+// A band of content inside the page gutter (product description, related products).
+.rj-section {
+	padding: 0 var(--rj-gutter) 7.5rem;
+
+	&--top {
+		padding-block-start: 7.5rem;
+	}
+
+	@include below($phone) {
+		padding-block-end: 4.5rem;
+
+		&--top {
+			padding-block-start: 4.5rem;
+		}
+	}
+}
+
+// A product with no long description shows no empty panel.
+.rj-product-body:not(:has(.rj-prose > *)) {
+	display: none;
+}
+
+// Sections designed to follow another (no top padding of their own) get one
+// when they open a page.
+.wp-block-post-content > :is(.rj-tanda, .rj-precios):first-child {
+	padding-block-start: 4.4rem;
+
+	@include below($phone) {
+		padding-block-start: 2.5rem;
+	}
+}

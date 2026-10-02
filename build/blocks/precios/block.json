@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "rejunte/precios",
+  "version": "1.0.0",
+  "title": "Precios",
+  "category": "rejunte",
+  "icon": "money-alt",
+  "description": "Fila de tarjetas con precio y botón para sumar al pedido.",
+  "keywords": [
+    "precios",
+    "productos",
+    "tarjetas"
+  ],
+  "textdomain": "rejunte",
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "Precios"
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css"
+}

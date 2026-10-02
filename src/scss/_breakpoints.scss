@@ -1,0 +1,28 @@
+// Breakpoints, as the prototype defines them. Desktop-first: each is a max-width.
+$tablet: 62rem; // Two-column layouts collapse, the header menu moves behind a button.
+$phone: 40rem; // Phone-specific tightening.
+$narrow: 34rem; // The bento drops to one column.
+
+@mixin below($width) {
+	@media (max-width: $width) {
+		@content;
+	}
+}
+
+@mixin reduced-motion {
+	@media (prefers-reduced-motion: reduce) {
+		@content;
+	}
+}
+
+// Motion the visitor can stop with the "pause animations" control, or never
+// sees at all when their system asks for reduced motion.
+@mixin pausable-animation {
+	:root[data-motion="paused"] & {
+		animation-play-state: paused;
+	}
+
+	@include reduced-motion {
+		animation: none;
+	}
+}

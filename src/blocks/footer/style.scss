@@ -1,0 +1,70 @@
+@use "../../scss/breakpoints" as *;
+
+.rj-foot {
+	display: grid;
+	grid-template-columns: minmax(0, 1.3fr) repeat(var(--rj-foot-cols, 2), minmax(0, 1fr));
+	gap: 3.5rem;
+	align-items: start;
+	padding: 5.6rem var(--rj-gutter) 4.4rem;
+	background: var(--rj-red);
+	color: var(--rj-pink);
+
+	a {
+		color: var(--rj-pink);
+	}
+}
+
+.rj-foot__brand {
+	display: grid;
+	gap: 1.4rem;
+	justify-items: start;
+}
+
+.rj-foot .rj-image.rj-foot__mark {
+	inline-size: 88px;
+	background: transparent;
+}
+
+.rj-foot__name {
+	font-family: var(--rj-display);
+	font-size: 2rem;
+	letter-spacing: 0.06em;
+}
+
+.rj-foot__text {
+	max-inline-size: 330px;
+	font-size: 1.03rem;
+	font-weight: 500;
+	line-height: 1.7;
+}
+
+.rj-foot__col {
+	display: grid;
+	gap: 0.75rem;
+	font-size: 1.03rem;
+	font-weight: 500;
+}
+
+// A heading for navigation, set as the prototype's small label.
+.rj-foot__label {
+	font-family: var(--rj-body);
+	font-size: 0.72rem;
+	font-weight: 800;
+	line-height: inherit;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: inherit;
+	text-wrap: wrap;
+}
+
+@include below($tablet) {
+	.rj-foot {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@include below($phone) {
+	.rj-foot {
+		gap: 2rem;
+	}
+}

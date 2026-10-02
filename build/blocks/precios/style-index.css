@@ -1,0 +1,1 @@
+.rj-precios{display:grid;gap:2.1rem;grid-template-columns:repeat(3,minmax(0,1fr));padding:0 var(--rj-gutter) 7.5rem}@media(max-width:62rem){.rj-precios{grid-template-columns:minmax(0,1fr)}}

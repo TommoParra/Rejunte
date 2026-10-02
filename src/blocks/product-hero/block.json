@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rejunte/product-hero",
+	"version": "1.0.0",
+	"title": "Producto",
+	"category": "rejunte",
+	"icon": "products",
+	"description": "La cabecera de la página de un producto: foto, migas, nombre, presentación, descripción corta, precio y el formulario para sumarlo al pedido. Toma los datos del producto.",
+	"keywords": [ "producto", "woocommerce", "tienda" ],
+	"textdomain": "rejunte",
+	"usesContext": [ "postId", "postType" ],
+	"attributes": {
+		"chips": { "type": "array", "default": [] },
+		"buttonLabel": { "type": "string", "default": "Sumar al pedido" },
+		"addedLabel": { "type": "string", "default": "En el pedido" },
+		"shopLabel": { "type": "string", "default": "La vitrina" }
+	},
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"viewScriptModule": "file:./view.js",
+	"render": "file:./render.php"
+}

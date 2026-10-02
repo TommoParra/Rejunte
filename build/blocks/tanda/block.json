@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "rejunte/tanda",
+  "version": "1.0.0",
+  "title": "La tanda",
+  "category": "rejunte",
+  "icon": "images-alt2",
+  "description": "Lo que sale del horno esta semana, en una galería curva que se arrastra, se recorre con las flechas del teclado o con los botones.",
+  "keywords": [
+    "galería",
+    "carrusel",
+    "fotos",
+    "tanda"
+  ],
+  "textdomain": "rejunte",
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "hint": {
+      "type": "string",
+      "default": ""
+    },
+    "items": {
+      "type": "array",
+      "default": []
+    },
+    "label": {
+      "type": "string",
+      "default": "Galería de la tanda. Usa las flechas izquierda y derecha para recorrerla."
+    },
+    "prevLabel": {
+      "type": "string",
+      "default": "Anterior"
+    },
+    "nextLabel": {
+      "type": "string",
+      "default": "Siguiente"
+    },
+    "bend": {
+      "type": "number",
+      "default": 2.2
+    },
+    "scrollSpeed": {
+      "type": "number",
+      "default": 1
+    },
+    "scrollEase": {
+      "type": "number",
+      "default": 0.085
+    },
+    "headingLevel": {
+      "type": "number",
+      "enum": [
+        1,
+        2
+      ],
+      "default": 2
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "viewScriptModule": "file:./view.js"
+}

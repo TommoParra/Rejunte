@@ -1,0 +1,207 @@
+@use "../../scss/breakpoints" as *;
+
+// Ported from the prototype's .rj-nav. The header sticks to the top of the page;
+// below 62rem the section links move behind a disclosure button while the order
+// button stays in the bar.
+
+.rj-nav {
+	position: sticky;
+	z-index: 40;
+	inset-block-start: var(--wp-admin--admin-bar--height, 0px);
+	background: color-mix(in srgb, var(--rj-pink) 92%, transparent);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+
+	// Below 600px the admin bar scrolls away with the page.
+	@media (max-width: 600px) {
+		inset-block-start: 0;
+	}
+}
+
+.rj-nav__bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2.5rem;
+	padding: 1.9rem var(--rj-gutter);
+}
+
+.rj-nav__brand {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	font-family: var(--rj-display);
+	font-size: 1.44rem;
+	letter-spacing: 0.06em;
+	color: var(--rj-red);
+
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+.rj-nav .rj-image.rj-nav__mark {
+	flex: none;
+	inline-size: 52px;
+	background: transparent;
+}
+
+.rj-nav__burger,
+.rj-nav__panel {
+	display: none;
+}
+
+.rj-nav__links ul {
+	display: flex;
+	gap: 2.75rem;
+}
+
+.rj-nav__link {
+	font-size: 0.84rem;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--rj-ink);
+
+	&:hover {
+		color: var(--rj-red);
+	}
+
+	// The page being viewed.
+	&[aria-current="page"] {
+		color: var(--rj-red);
+		text-decoration: underline;
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.45em;
+	}
+}
+
+.rj-nav__cta {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-block-size: 48px;
+	padding-inline: 1.9rem;
+	border: 2px solid var(--rj-red);
+	border-radius: 999px;
+	font-size: 0.8rem;
+	font-weight: 800;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	color: var(--rj-red);
+	transition: background-color 0.18s, color 0.18s;
+
+	&:hover {
+		background: var(--rj-red);
+		color: var(--rj-surface);
+		text-decoration: none;
+	}
+}
+
+@include below($tablet) {
+	.rj-nav__bar {
+		gap: 0.9rem;
+		padding-block: 1.1rem;
+	}
+
+	.rj-nav__links {
+		display: none;
+	}
+
+	.rj-nav__brand {
+		flex: 1;
+		gap: 0.7rem;
+		font-size: 1.18rem;
+	}
+
+	.rj-nav .rj-image.rj-nav__mark {
+		inline-size: 40px;
+	}
+
+	.rj-nav__cta {
+		padding: 0.62rem 1.1rem;
+		font-size: 0.74rem;
+	}
+
+	.rj-nav__burger {
+		display: grid;
+		flex: none;
+		place-items: center;
+		inline-size: 46px;
+		block-size: 46px;
+		border: 2px solid var(--rj-red);
+		border-radius: 50%;
+		background: none;
+		color: var(--rj-red);
+		cursor: pointer;
+
+		> span:first-child {
+			display: grid;
+			gap: 4px;
+		}
+
+		i {
+			display: block;
+			inline-size: 17px;
+			block-size: 2px;
+			border-radius: 2px;
+			background: currentcolor;
+			transition: transform 220ms ease, opacity 160ms ease;
+		}
+	}
+
+	.rj-nav[data-open="true"] .rj-nav__burger {
+		background: var(--rj-red);
+		color: var(--rj-surface);
+
+		i:first-child {
+			transform: translateY(6px) rotate(45deg);
+		}
+
+		i:nth-child(2) {
+			opacity: 0;
+		}
+
+		i:last-child {
+			transform: translateY(-6px) rotate(-45deg);
+		}
+	}
+
+	.rj-nav__panel {
+		display: block;
+		border-block-start: 2px solid var(--rj-red);
+		background: var(--rj-surface);
+
+		&[hidden] {
+			display: none;
+		}
+
+		ul {
+			padding: 0.4rem var(--rj-gutter) 1.1rem;
+		}
+
+		.rj-nav__link {
+			display: block;
+			padding-block: 0.95rem;
+			border-block-end: 1px solid color-mix(in srgb, var(--rj-red) 22%, transparent);
+			font-family: var(--rj-display);
+			font-size: 1.35rem;
+			font-weight: 400;
+			letter-spacing: normal;
+			text-transform: none;
+			color: var(--rj-red);
+		}
+
+		li:last-child .rj-nav__link {
+			border-block-end: 0;
+		}
+	}
+}
+
+@include reduced-motion {
+	.rj-nav__burger i,
+	.rj-nav__cta {
+		transition: none;
+	}
+}

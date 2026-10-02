@@ -1,0 +1,74 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rejunte/vitrina",
+	"version": "1.0.0",
+	"title": "La vitrina",
+	"category": "rejunte",
+	"icon": "grid-view",
+	"description": "Titular, texto y un mosaico de fotos y palabras que responde al cursor.",
+	"keywords": [
+		"bento",
+		"mosaico",
+		"vitrina",
+		"grid"
+	],
+	"textdomain": "rejunte",
+	"attributes": {
+		"eyebrow": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"text": {
+			"type": "string",
+			"default": ""
+		},
+		"glowColor": {
+			"type": "string",
+			"default": "160 18 43"
+		},
+		"spotlightRadius": {
+			"type": "number",
+			"default": 300
+		},
+		"enableSpotlight": {
+			"type": "boolean",
+			"default": true
+		},
+		"enableBorderGlow": {
+			"type": "boolean",
+			"default": true
+		},
+		"enableTilt": {
+			"type": "boolean",
+			"default": true
+		},
+		"enableMagnetism": {
+			"type": "boolean",
+			"default": true
+		},
+		"clickEffect": {
+			"type": "boolean",
+			"default": true
+		},
+		"headingLevel": {
+			"type": "number",
+			"enum": [
+				1,
+				2
+			],
+			"default": 2
+		}
+	},
+	"supports": {
+		"anchor": true,
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"viewScriptModule": "file:./view.js"
+}
