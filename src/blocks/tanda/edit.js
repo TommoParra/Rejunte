@@ -1,5 +1,5 @@
 import { BlockControls, InspectorControls, MediaUpload, MediaUploadCheck, RichText, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, RangeControl, TextControl, ToolbarButton, ToolbarGroup } from '@wordpress/components';
+import { PanelBody, RangeControl, SelectControl, TextControl, ToggleControl, ToolbarButton, ToolbarGroup } from '@wordpress/components';
 import { useLayoutEffect, useRef, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -9,13 +9,26 @@ import { RjImage, imageFromMedia } from '../../shared/image';
 import { html } from '../../shared/text';
 
 /**
+ * Date of the latest release day ("1 de octubre"), as the server writes it.
+ *
+ * @param {number} day ISO weekday, 1 = Monday … 7 = Sunday.
+ * @return {string} Date.
+ */
+function lastRelease( day ) {
+	const date = new Date();
+	const today = date.getDay() || 7;
+	date.setDate( date.getDate() - ( ( today - day + 7 ) % 7 ) );
+	return date.toLocaleDateString( 'es-ES', { day: 'numeric', month: 'long' } );
+}
+
+/**
  * The gallery moves in the editor exactly as on the site (same engine). The
  * photo in the centre is the one being edited: its caption is typed under the
  * gallery, its image and alt text change from the controls on it and in the
  * sidebar, and it can be moved or removed from the toolbar.
  */
 export default function Edit( { attributes, setAttributes, isSelected } ) {
-	const { eyebrow, heading, hint, items, label, prevLabel, nextLabel, bend, scrollSpeed, scrollEase } = attributes;
+	const { eyebrow, heading, hint, items, label, prevLabel, nextLabel, bend, scrollSpeed, scrollEase, autoDate, datePrefix, releaseDay } = attributes;
 	const root = useRef( null );
 	const engine = useRef( null );
 	const [ active, setActive ] = useState( 0 );
@@ -115,6 +128,27 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 						<AltTextControl image={ current } onChange={ ( next ) => setItems( list.set( items, active, next ) ) } />
 					</PanelBody>
 				) }
+				<PanelBody title={ __( 'Fecha de la tanda', 'rejunte' ) } initialOpen={ false }>
+					<ToggleControl
+						__nextHasNoMarginBottom
+						label={ __( 'Fecha automática', 'rejunte' ) }
+						help={ __( 'El antetítulo muestra la fecha del último día de tanda, sin tener que cambiarla cada semana.', 'rejunte' ) }
+						checked={ autoDate }
+						onChange={ ( value ) => setAttributes( { autoDate: value } ) }
+					/>
+					{ autoDate && (
+						<>
+							<TextControl __nextHasNoMarginBottom label={ __( 'Texto antes de la fecha', 'rejunte' ) } value={ datePrefix } onChange={ ( value ) => setAttributes( { datePrefix: value } ) } />
+							<SelectControl
+								__nextHasNoMarginBottom
+								label={ __( 'Día de la tanda', 'rejunte' ) }
+								value={ String( releaseDay ) }
+								options={ [ 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo' ].map( ( name, index ) => ( { value: String( index + 1 ), label: name } ) ) }
+								onChange={ ( value ) => setAttributes( { releaseDay: Number( value ) } ) }
+							/>
+						</>
+					) }
+				</PanelBody>
 				<PanelBody title={ __( 'Movimiento', 'rejunte' ) } initialOpen={ false }>
 					<RangeControl
 						__nextHasNoMarginBottom
@@ -153,7 +187,11 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 
 			<section { ...useBlockProps( { className: 'rj-tanda' } ) }>
 				<div className="rj-tanda__head">
-					<RichText tagName="span" className="rj-eyebrow" value={ eyebrow } allowedFormats={ [] } placeholder={ __( 'Antetítulo', 'rejunte' ) } onChange={ set( 'eyebrow' ) } />
+					{ autoDate ? (
+						<span className="rj-eyebrow" title={ __( 'Fecha automática: se cambia en la barra lateral', 'rejunte' ) }>{ `${ datePrefix } ${ lastRelease( releaseDay ) }` }</span>
+					) : (
+						<RichText tagName="span" className="rj-eyebrow" value={ eyebrow } allowedFormats={ [] } placeholder={ __( 'Antetítulo', 'rejunte' ) } onChange={ set( 'eyebrow' ) } />
+					) }
 					<RichText tagName={ `h${ attributes.headingLevel }` } className="rj-tanda__title" value={ heading } allowedFormats={ [] } placeholder={ __( 'Título', 'rejunte' ) } onChange={ set( 'heading' ) } />
 				</div>
 				<div className="rj-gallery" ref={ root }>

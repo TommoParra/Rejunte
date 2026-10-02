@@ -1,11 +1,10 @@
 // Admin session for Playwright without touching the password: WP-CLI creates a
 // session token for user 1 and signs auth cookies with it; `logout()` destroys it.
 import { execFileSync } from 'node:child_process'
-import { dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
 
-const here = dirname(fileURLToPath(import.meta.url))
-const wp = (code) => execFileSync(`${here}/wp`, ['eval', code], { encoding: 'utf8' })
+// WP_CLI: how to run WP-CLI for the site, e.g. "wp --path=/var/www/site".
+const [ command, ...prefix ] = ( process.env.WP_CLI || 'wp' ).split( ' ' )
+const wp = ( code ) => execFileSync( command, [ ...prefix, 'eval', code ], { encoding: 'utf8' } )
 
 export function login() {
   const json = wp(`
@@ -21,7 +20,7 @@ export function login() {
   const data = JSON.parse(json)
   return {
     token: data.token,
-    cookies: data.cookies.map(c => ({ ...c, domain: 'rejunte.local', path: '/', secure: true, httpOnly: true, sameSite: 'Lax' })),
+    cookies: data.cookies.map(c => ({ ...c, domain: new URL(process.env.REJUNTE_URL || 'https://rejunte.local:8890').hostname, path: '/', secure: true, httpOnly: true, sameSite: 'Lax' })),
   }
 }
 

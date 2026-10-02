@@ -1,19 +1,24 @@
 # Visual and behaviour checks
 
-The Playwright scripts used to build and audit the theme (2026-10-02). They currently import Playwright, sharp and axe from `web-presence/node_modules/.pnpm/…` by absolute path, call a WP-CLI wrapper `./wp`, and expect the site at `https://rejunte.local:8890` and the prototype at `http://127.0.0.1:3999`. Backlog task D8 turns them into `npm run test:visual`.
+Playwright, axe-core and sharp checks used to build and audit the theme. They run against a live WordPress install (local or production) and need the Playwright browsers (`npx playwright install` once).
 
-| Script | Checks |
+| Variable | Default | Used for |
+| --- | --- | --- |
+| `REJUNTE_URL` | `https://rejunte.local:8890` | The site under test |
+| `PROTOTYPE_URL` | `http://127.0.0.1:3999/portfolio/rejunte?preview=true` | The Vue prototype (`npm run test:prototype` only) |
+| `WP_CLI` | `wp` | How to run WP-CLI for the site (`npm run test:editor` only; it creates a temporary admin session) |
+
+| Command | Checks |
 | --- | --- |
-| `compare.mjs <w> <h> <label>` | Prototype vs WordPress, pixel diff per 150px band |
-| `editor-compare.mjs <postId> <path> <label>` | Editor canvas vs live page |
-| `flow.mjs [width] [order]` | Add to order from cards and product page, cart, checkout |
-| `wa-flow.mjs` | WhatsApp ordering: button label and link, live updates, hand-off and checkout redirects |
-| `variable-flow.mjs` | A product with options, through to the WhatsApp message |
-| `interact.mjs` | Phone menu, Escape, skip link, pause control, gallery keyboard |
-| `axe.mjs [paths…]` | axe-core, WCAG 2.2 AA + best practices, desktop and phone |
-| `overflow.mjs` | Elements outside the viewport and overflowing boxes, many widths (`WIDTHS`, `ENGINES` env) |
-| `xbrowser.mjs` | WebKit and Firefox (requests proxied through Node to resolve `.local`) |
-| `pages.mjs <w> <prefix> <paths…>` | Full-page screenshots |
-| `seo-audit.py` | Title, description, canonical, robots, H1, alt, JSON-LD types, sitemap contents |
-| `cookies.mjs` | Cookies, storage and third-party requests on a first visit and after adding to the cart |
-| `wplogin.mjs` | Admin session for the editor checks, created and destroyed through WP-CLI |
+| `npm run test:visual` | a11y + responsive + flows + seo |
+| `npm run test:a11y` | axe-core, WCAG 2.2 AA + best practices, desktop and phone, cookie banner included |
+| `npm run test:responsive` | Elements outside the viewport and overflowing boxes, 12 page types × 10 widths (`WIDTHS`, `ENGINES` to narrow or widen) |
+| `npm run test:browsers` | The same in WebKit and Firefox |
+| `npm run test:flows` | WhatsApp ordering (button, live link, hand-off, checkout redirect), menu, keyboard, pause control, gallery |
+| `npm run test:seo` | Title, description, canonical, robots, H1, alt text, JSON-LD types, sitemap contents |
+| `npm run test:prototype` | Prototype vs WordPress, pixel diff by 150px band, at 1440 and 390 |
+| `npm run test:editor` | Block editor canvas vs live front page |
+
+Other scripts: `flow.mjs` (add to order from cards and product page, cart, optional test order), `variable-flow.mjs` (a product with options, needs the sample "Caja de alfajores"), `pages.mjs` (full-page screenshots), `cookies.mjs` (cookies and third-party requests on a first visit).
+
+Screenshots and diffs are written to `tests/visual/output/` (not committed).

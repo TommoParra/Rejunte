@@ -95,6 +95,21 @@ function rejunte_llms_lines(): array {
 	 */
 	$exclude = (array) apply_filters( 'rejunte_llms_exclude_pages', array( (int) get_option( 'page_on_front' ) ) );
 
+	// Questions and answers from every published page that has an FAQ block.
+	global $wpdb;
+	$faq_pages = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'page' AND post_status = 'publish' AND post_content LIKE %s", '%' . $wpdb->esc_like( '<!-- wp:rejunte/faq' ) . '%' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- One small read per llms.txt request.
+	$faq       = array();
+	foreach ( $faq_pages as $faq_page ) {
+		$faq = array_merge( $faq, rejunte_faq_items( parse_blocks( (string) get_post_field( 'post_content', (int) $faq_page ) ) ) );
+	}
+	if ( $faq ) {
+		$lines[] = '## ' . __( 'Preguntas frecuentes', 'rejunte' );
+		foreach ( $faq as $item ) {
+			$lines[] = '- **' . $item['question'] . '** ' . $item['answer'];
+		}
+		$lines[] = '';
+	}
+
 	$lines[] = '## ' . __( 'Páginas', 'rejunte' );
 	$lines[] = sprintf( '- [%s](%s)', __( 'Inicio', 'rejunte' ), home_url( '/' ) );
 	foreach ( get_pages( array( 'sort_column' => 'menu_order,post_title' ) ) as $page ) {

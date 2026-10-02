@@ -34,6 +34,14 @@
     "country": {
       "type": "string",
       "default": "ES"
+    },
+    "legal": {
+      "type": "array",
+      "default": []
+    },
+    "cookiesLabel": {
+      "type": "string",
+      "default": "Configurar cookies"
     }
   },
   "supports": {

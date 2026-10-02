@@ -1,11 +1,12 @@
 // Shopping flow: add from the front page and the product page, then cart and checkout.
 // Usage: node flow.mjs [width]
-import { chromium } from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/index.mjs'
+import { chromium, BASE, PROTOTYPE, prepare } from './lib.mjs'
 
 const width = Number(process.argv[2] || 1440)
-const base = 'https://rejunte.local:8890'
+const base = BASE
 const browser = await chromium.launch()
 const context = await browser.newContext({ viewport: { width, height: 900 }, ignoreHTTPSErrors: true, reducedMotion: 'reduce' })
+await prepare(context)
 const page = await context.newPage()
 const errors = []
 page.on('console', m => { if (m.type() === 'error') errors.push(m.text()) })
@@ -42,13 +43,13 @@ log('reload header:', await page.locator('.rj-nav__cta').textContent(), '| cards
 await page.goto(base + '/carrito/', { waitUntil: 'networkidle' })
 await page.waitForSelector('.wc-block-cart-items, .wc-block-cart__empty-cart__title', { timeout: 20000 })
 await page.evaluate(() => { const n = document.querySelector('.rj-nav'); if (n) n.style.position = 'relative' })
-await page.screenshot({ path: `cmp/flow-cart-${ width }.png`, fullPage: true })
+await page.screenshot({ path: `output/flow-cart-${ width }.png`, fullPage: true })
 
 await page.goto(base + '/finalizar-compra/', { waitUntil: 'networkidle' })
 await page.waitForSelector('.wc-block-checkout__form, .wc-block-checkout', { timeout: 20000 })
 await page.waitForTimeout(800)
 await page.evaluate(() => { const n = document.querySelector('.rj-nav'); if (n) n.style.position = 'relative' })
-await page.screenshot({ path: `cmp/flow-checkout-${ width }.png`, fullPage: true })
+await page.screenshot({ path: `output/flow-checkout-${ width }.png`, fullPage: true })
 
 if (process.argv[3] === 'order') {
   // Fill and place an order paid on pickup.
@@ -64,13 +65,13 @@ if (process.argv[3] === 'order') {
   try {
     await page.waitForURL(/pedido-recibido|order-received/, { timeout: 30000 })
   } catch (error) {
-    await page.screenshot({ path: `cmp/flow-checkout-failed-${ width }.png`, fullPage: true })
+    await page.screenshot({ path: `output/flow-checkout-failed-${ width }.png`, fullPage: true })
     log('checkout errors:', await page.locator('.wc-block-components-validation-error, .wc-block-components-notice-banner').allTextContents())
     throw error
   }
   await page.waitForLoadState('networkidle')
   await page.evaluate(() => { const n = document.querySelector('.rj-nav'); if (n) n.style.position = 'relative' })
-  await page.screenshot({ path: `cmp/flow-confirmation-${ width }.png`, fullPage: true })
+  await page.screenshot({ path: `output/flow-confirmation-${ width }.png`, fullPage: true })
   log('order placed:', page.url())
 }
 

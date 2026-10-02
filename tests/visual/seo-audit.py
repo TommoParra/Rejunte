@@ -1,6 +1,6 @@
-import json, re, ssl, urllib.request
+import json, os, re, ssl, urllib.request
 ctx = ssl._create_unverified_context()
-base = 'https://rejunte.local:8890'
+base = os.environ.get('REJUNTE_URL', 'https://rejunte.local:8890').rstrip('/')
 def get(path):
     req = urllib.request.Request(base + path, headers={'User-Agent': 'Mozilla/5.0 audit'})
     try:

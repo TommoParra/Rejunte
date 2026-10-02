@@ -1,5 +1,5 @@
 import { InspectorControls, RichText, useBlockProps } from '@wordpress/block-editor';
-import { Button, PanelBody, SelectControl } from '@wordpress/components';
+import { Button, PanelBody, SelectControl, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import { AddButton, AltTextControl, EditableImage, RemoveButton, list } from '../../shared/editor';
@@ -12,7 +12,8 @@ import { columnsStyle } from './save';
  * the theme for structured data, so typing them here is all it takes.
  */
 export default function Edit( { attributes, setAttributes, isSelected } ) {
-	const { logo, name, description, columns, country } = attributes;
+	const { logo, name, description, columns, country, legal, cookiesLabel } = attributes;
+	const setLegal = ( next ) => setAttributes( { legal: next } );
 	const set = ( key ) => ( value ) => setAttributes( { [ key ]: html( value ) } );
 	const setColumns = ( next ) => setAttributes( { columns: next } );
 	const setLines = ( index, lines ) => setColumns( list.patch( columns, index, { lines } ) );
@@ -31,6 +32,20 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 					<Button variant="secondary" onClick={ () => setColumns( [ ...columns, { label: '', lines: [ '' ] } ] ) }>
 						{ __( 'Añadir columna', 'rejunte' ) }
 					</Button>
+				</PanelBody>
+				<PanelBody title={ __( 'Enlaces legales', 'rejunte' ) } initialOpen={ false }>
+					{ legal.map( ( link, index ) => (
+						<TextControl
+							__nextHasNoMarginBottom
+							key={ index }
+							label={ html( link.label ) || __( 'Enlace', 'rejunte' ) }
+							value={ link.url }
+							onChange={ ( url ) => setLegal( list.patch( legal, index, { url } ) ) }
+						/>
+					) ) }
+					<p className="components-base-control__help">
+						{ __( '«Configurar cookies» vuelve a abrir el aviso de cookies; vacío, no se muestra.', 'rejunte' ) }
+					</p>
 				</PanelBody>
 				<PanelBody title={ __( 'Datos para buscadores', 'rejunte' ) } initialOpen={ false }>
 					<p>
@@ -100,6 +115,38 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 						) }
 					</div>
 				) ) }
+				<div className="rj-foot__legal">
+					<ul className="rj-foot__links">
+						{ legal.map( ( link, index ) => (
+							<li key={ index } className="rj-edit-list-item">
+								<RichText
+									tagName="span"
+									className="rj-foot__link"
+									value={ link.label }
+									allowedFormats={ [] }
+									withoutInteractiveFormatting
+									placeholder={ __( 'Enlace', 'rejunte' ) }
+									onChange={ ( value ) => setLegal( list.patch( legal, index, { label: html( value ) } ) ) }
+								/>
+								{ isSelected && <RemoveButton label={ __( 'Quitar enlace', 'rejunte' ) } onClick={ () => setLegal( list.remove( legal, index ) ) } /> }
+							</li>
+						) ) }
+						{ isSelected && (
+							<li>
+								<AddButton label={ __( 'Añadir enlace', 'rejunte' ) } onClick={ () => setLegal( [ ...legal, { label: '', url: '/' } ] ) } />
+							</li>
+						) }
+					</ul>
+					<RichText
+						tagName="span"
+						className="rj-foot__cookies"
+						value={ cookiesLabel }
+						allowedFormats={ [] }
+						withoutInteractiveFormatting
+						placeholder={ __( 'Configurar cookies', 'rejunte' ) }
+						onChange={ ( value ) => setAttributes( { cookiesLabel: html( value ) } ) }
+					/>
+				</div>
 			</footer>
 		</>
 	);

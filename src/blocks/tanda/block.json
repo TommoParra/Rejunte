@@ -62,6 +62,18 @@
 				2
 			],
 			"default": 2
+		},
+		"autoDate": {
+			"type": "boolean",
+			"default": false
+		},
+		"datePrefix": {
+			"type": "string",
+			"default": "Tanda del"
+		},
+		"releaseDay": {
+			"type": "number",
+			"default": 4
 		}
 	},
 	"supports": {

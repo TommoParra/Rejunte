@@ -342,3 +342,193 @@
 .rj-notices:empty {
 	display: none;
 }
+
+// Cookie banner (inc/consent.php). Fixed to the bottom of the screen, so it
+// never moves the page; while it shows, focused elements scroll into view above
+// it. Without JavaScript it stays hidden: nothing optional can load then anyway.
+html {
+	scroll-padding-block-end: var(--rj-consent-h, 0px);
+}
+
+.rj-consent {
+	position: fixed;
+	z-index: 90;
+	inset-inline: 0;
+	inset-block-end: 0;
+	padding: 0 var(--rj-gutter) 1.25rem;
+	pointer-events: none;
+
+	&[hidden],
+	html:not(.rj-consent-ready) & {
+		display: none;
+	}
+}
+
+.rj-consent__card {
+	display: grid;
+	gap: 0.9rem;
+	max-inline-size: 34rem;
+	margin-inline-start: auto;
+	padding: 1.5rem 1.75rem;
+	border: 2px solid var(--rj-red);
+	border-radius: var(--rj-radius);
+	background: var(--rj-surface);
+	box-shadow: 0 14px 34px rgb(var(--rj-shadow-rgb) / 0.22);
+	pointer-events: auto;
+}
+
+.rj-consent__title {
+	font-size: 1.6rem;
+	line-height: 1;
+}
+
+.rj-consent__text {
+	font-size: 0.95rem;
+	font-weight: 500;
+	line-height: 1.6;
+
+	a {
+		color: var(--rj-red);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+}
+
+.rj-consent__choices fieldset {
+	display: grid;
+	gap: 0.75rem;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.rj-consent__choice {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.75rem;
+	font-size: 0.92rem;
+	line-height: 1.5;
+
+	input {
+		flex: none;
+		inline-size: 20px;
+		block-size: 20px;
+		margin-block-start: 0.15rem;
+		accent-color: var(--rj-red);
+	}
+}
+
+.rj-consent__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+}
+
+// Accept, reject and configure carry the same weight.
+.rj-consent__button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-block-size: 44px;
+	padding-inline: 1.4rem;
+	border: 2px solid var(--rj-red);
+	border-radius: 999px;
+	color: var(--rj-red);
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+
+	&:hover {
+		background: var(--rj-red);
+		color: var(--rj-surface);
+	}
+
+	[data-mode="notice"] & {
+		background: var(--rj-red);
+		color: var(--rj-surface);
+	}
+}
+
+@include below($phone) {
+	.rj-consent {
+		padding: 0 0.75rem 0.75rem;
+	}
+
+	.rj-consent__card {
+		padding: 1.25rem;
+	}
+}
+
+// Controls that need the consent script appear only once it runs.
+html:not(.rj-consent-ready) [data-rj-consent-open] {
+	display: none;
+}
+
+// Confirmation after adding to the order.
+.rj-toast {
+	position: fixed;
+	z-index: 80;
+	inset-block-start: calc(var(--wp-admin--admin-bar--height, 0px) + var(--rj-nav-height) + 0.5rem);
+	inset-inline-end: var(--rj-gutter);
+	display: flex;
+	align-items: center;
+	gap: 0.9rem;
+	max-inline-size: min(28rem, calc(100% - 2rem));
+	padding: 0.85rem 0.85rem 0.85rem 1.25rem;
+	border-radius: 20px;
+	background: var(--rj-red);
+	box-shadow: 0 14px 34px rgb(var(--rj-shadow-rgb) / 0.3);
+	color: var(--rj-surface);
+	font-size: 0.92rem;
+	font-weight: 600;
+	animation: rj-toast-in 0.25s ease-out;
+
+	&[hidden] {
+		display: none;
+	}
+
+	@include reduced-motion {
+		animation: none;
+	}
+
+	@include below($phone) {
+		inset-inline: 0.75rem;
+		max-inline-size: none;
+	}
+}
+
+.rj-toast__text {
+	flex: 1;
+}
+
+.rj-toast__link {
+	flex: none;
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 0.14em;
+	text-decoration: underline;
+	text-transform: uppercase;
+	text-underline-offset: 0.25em;
+	white-space: nowrap;
+}
+
+.rj-toast__close {
+	display: grid;
+	flex: none;
+	place-items: center;
+	inline-size: 32px;
+	block-size: 32px;
+	border: 2px solid currentcolor;
+	border-radius: 999px;
+	font-size: 1.1rem;
+	line-height: 1;
+}
+
+@keyframes rj-toast-in {
+
+	from {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+}

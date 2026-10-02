@@ -7,14 +7,42 @@
 	"category": "rejunte",
 	"icon": "align-wide",
 	"description": "Marca, descripción y columnas de datos (retiro, redes). La dirección, el horario, el teléfono y las redes que se escriban aquí son también los que se dan a buscadores y asistentes.",
-	"keywords": [ "footer", "pie", "contacto", "horario" ],
+	"keywords": [
+		"footer",
+		"pie",
+		"contacto",
+		"horario"
+	],
 	"textdomain": "rejunte",
 	"attributes": {
-		"logo": { "type": "object", "default": {} },
-		"name": { "type": "string", "default": "" },
-		"description": { "type": "string", "default": "" },
-		"columns": { "type": "array", "default": [] },
-		"country": { "type": "string", "default": "ES" }
+		"logo": {
+			"type": "object",
+			"default": {}
+		},
+		"name": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"columns": {
+			"type": "array",
+			"default": []
+		},
+		"country": {
+			"type": "string",
+			"default": "ES"
+		},
+		"legal": {
+			"type": "array",
+			"default": []
+		},
+		"cookiesLabel": {
+			"type": "string",
+			"default": "Configurar cookies"
+		}
 	},
 	"supports": {
 		"html": false,

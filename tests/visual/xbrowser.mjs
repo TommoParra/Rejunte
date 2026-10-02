@@ -1,16 +1,17 @@
 // WebKit and Firefox: proxy every request through Playwright's Node side (it
 // resolves rejunte.local from /etc/hosts), then run the overflow probe and take
 // screenshots.
-import { webkit, firefox } from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/index.mjs'
+import { webkit, firefox, BASE, PROTOTYPE, prepare } from './lib.mjs'
 import { readFileSync } from 'node:fs'
 const probeSource = readFileSync(new URL('./overflow.mjs', import.meta.url), 'utf8')
 const probe = eval('(' + probeSource.slice(probeSource.indexOf('const probe = ') + 14, probeSource.indexOf('\nlet problems')).trim() + ')')
-const base = 'https://rejunte.local:8890'
+const base = BASE
 const pages = [ '/', '/vitrina/', '/producto/alfajores-de-maicena/', '/encargos/', '/carrito/' ]
 for (const [ name, engine ] of [ [ 'webkit', webkit ], [ 'firefox', firefox ] ]) {
   const browser = await engine.launch()
   for (const width of [ 320, 390, 1440 ]) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, ignoreHTTPSErrors: true, reducedMotion: 'reduce' })
+    await prepare(context)
     await context.route('**/*', async route => {
       try { route.fulfill({ response: await route.fetch({ maxRedirects: 0 }) }) } catch { route.abort() }
     })
@@ -28,7 +29,7 @@ for (const [ name, engine ] of [ [ 'webkit', webkit ], [ 'firefox', firefox ] ])
       const r = await page.evaluate(probe)
       const findings = [ r.pageScroll ? `page scroll ${ r.pageScroll }px` : '', ...r.stick, ...r.spill ].filter(Boolean)
       console.log(`${ name } ${ width } ${ path }: ${ findings.length ? findings.slice(0, 3).join(' | ') : 'ok' }`)
-      if (width !== 320) await page.screenshot({ path: `cmp/x-${ name }-${ width }-${ path.replace(/\W+/g, '_') }.png`, fullPage: false })
+      if (width !== 320) await page.screenshot({ path: `output/x-${ name }-${ width }-${ path.replace(/\W+/g, '_') }.png`, fullPage: false })
     }
     if (errors.length) console.log(`  ${ name } ${ width } errors: ${ errors.join(' / ') }`)
     await context.close()

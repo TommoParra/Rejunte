@@ -92,7 +92,18 @@
 		td {
 			padding: 0.75rem 1rem;
 			border-block-end: 1px solid rgb(var(--rj-red-rgb) / 0.22);
+			overflow-wrap: anywhere;
 			text-align: start;
+			vertical-align: top;
+		}
+
+		@media (max-width: 40rem) {
+			font-size: 0.85rem;
+
+			th,
+			td {
+				padding: 0.6rem 0.5rem;
+			}
 		}
 
 		th {
@@ -107,4 +118,13 @@
 	> [class*="wp-block-rejunte-"] {
 		max-inline-size: none;
 	}
+}
+
+// "Borrador" notice on draft pages (legal texts pending review).
+.rj-prose > .rj-draft-note {
+	padding: 1rem 1.25rem;
+	border: 2px dashed var(--rj-red);
+	border-radius: 18px;
+	background: var(--rj-pink);
+	font-size: 0.95rem;
 }

@@ -20,9 +20,11 @@ require REJUNTE_DIR . '/inc/setup.php';
 require REJUNTE_DIR . '/inc/assets.php';
 require REJUNTE_DIR . '/inc/blocks.php';
 require REJUNTE_DIR . '/inc/performance.php';
+require REJUNTE_DIR . '/inc/hardening.php';
 require REJUNTE_DIR . '/inc/accessibility.php';
 require REJUNTE_DIR . '/inc/business.php';
 require REJUNTE_DIR . '/inc/contact.php';
+require REJUNTE_DIR . '/inc/consent.php';
 require REJUNTE_DIR . '/inc/seo.php';
 require REJUNTE_DIR . '/inc/llms.php';
 

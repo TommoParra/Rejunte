@@ -366,6 +366,62 @@ function rejunte_format_euros( float $amount ): string {
 }
 
 /**
+ * Questions and answers from the FAQ blocks of a set of parsed blocks.
+ *
+ * @param array<int, array<string, mixed>> $blocks Parsed blocks.
+ * @return array<int, array{question: string, answer: string}>
+ */
+function rejunte_faq_items( array $blocks ): array {
+	$items = array();
+	foreach ( rejunte_find_blocks( $blocks, array( 'rejunte/faq' ) ) as $faq ) {
+		foreach ( (array) ( $faq['attrs']['items'] ?? array() ) as $item ) {
+			$question = rejunte_plain_text( $item['question'] ?? '' );
+			$answer   = rejunte_plain_text( $item['answer'] ?? '' );
+			if ( '' !== $question && '' !== $answer ) {
+				$items[] = array(
+					'question' => $question,
+					'answer'   => $answer,
+				);
+			}
+		}
+	}
+	return $items;
+}
+
+/**
+ * A page with FAQ blocks also describes them as an FAQPage.
+ *
+ * @param array<int, array<string, mixed>> $graph Nodes.
+ * @param array<string, mixed>             $page  WebPage node.
+ * @return array<int, array<string, mixed>>
+ */
+function rejunte_schema_faq( array $graph, array $page ): array {
+	$items = is_singular() ? rejunte_faq_items( rejunte_current_blocks() ) : array();
+	if ( ! $items ) {
+		return $graph;
+	}
+	$graph[] = array(
+		'@type'      => 'FAQPage',
+		'@id'        => $page['url'] . '#preguntas',
+		'isPartOf'   => array( '@id' => $page['@id'] ),
+		'inLanguage' => get_bloginfo( 'language' ),
+		'mainEntity' => array_map(
+			static fn( $item ) => array(
+				'@type'          => 'Question',
+				'name'           => $item['question'],
+				'acceptedAnswer' => array(
+					'@type' => 'Answer',
+					'text'  => $item['answer'],
+				),
+			),
+			$items
+		),
+	);
+	return $graph;
+}
+add_filter( 'rejunte_schema_graph', 'rejunte_schema_faq', 30, 2 );
+
+/**
  * Print the graph.
  */
 function rejunte_print_schema(): void {

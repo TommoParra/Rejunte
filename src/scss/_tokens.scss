@@ -11,9 +11,14 @@
 	--rj-ink: var(--wp--preset--color--ink, #8e1026);
 	--rj-red-rgb: 160 18 43;
 	--rj-shadow-rgb: 124 10 31;
-	--rj-gutter: clamp(1.5rem, 5vw, 4.75rem);
+	// Beyond 1600px of content the gutter grows instead, so very wide screens
+	// keep the composition (backgrounds stay full width). Below that it is the
+	// prototype's gutter exactly. 100% resolves against the padded element.
+	--rj-gutter: max(clamp(1.5rem, 5vw, 4.75rem), calc((100% - 1600px) / 2));
 	--rj-body: var(--wp--preset--font-family--body, "Figtree", ui-sans-serif, system-ui, "Segoe UI", sans-serif);
-	--rj-display: var(--wp--preset--font-family--display, "Caprasimo", Rockwell, "Arial Rounded MT Bold", Georgia, serif);
+	// Rockwell where it is installed (macOS, Office); elsewhere the self-hosted
+	// Arvo, which is only downloaded when Rockwell is missing.
+	--rj-display: var(--wp--preset--font-family--display, "Caprasimo", Rockwell, Arvo, Georgia, serif);
 	--rj-radius: 30px;
 
 	// Height of the sticky header, so in-page anchors land just below it.

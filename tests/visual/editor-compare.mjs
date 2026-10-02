@@ -1,19 +1,20 @@
 // Editor vs front end: the post editor's canvas for a post, captured at the same
 // width as the live page, then diffed.
 // Usage: node editor-compare.mjs <postId> <livePath> <label> [width]
-import { chromium } from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/index.mjs'
-import sharp from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/sharp@0.35.4_@types+node@24.13.3/node_modules/sharp/dist/index.mjs'
+import { chromium, BASE, PROTOTYPE, prepare } from './lib.mjs'
+import { sharp } from './lib.mjs'
 import { login, logout } from './wplogin.mjs'
 
 const [ , , postId, livePath, label, w = '1440' ] = process.argv
 const width = Number(w)
-const base = 'https://rejunte.local:8890'
+const base = BASE
 const session = login()
 const browser = await chromium.launch()
 
 try {
   // Editor: tall viewport so the whole canvas renders at once, sidebar closed.
   const editor = await browser.newContext({ viewport: { width, height: 5200 }, ignoreHTTPSErrors: true, reducedMotion: 'reduce' })
+  await prepare(editor)
   await editor.addCookies(session.cookies)
   const page = await editor.newPage()
   const errors = []
@@ -42,25 +43,26 @@ try {
   const contentHeight = await inner.evaluate(() => document.documentElement.scrollHeight)
   console.log('content height', contentHeight)
   await page.waitForTimeout(500)
-  await canvas.screenshot({ path: `cmp/${ label }-editor.png`, animations: 'disabled' })
+  await canvas.screenshot({ path: `output/${ label }-editor.png`, animations: 'disabled' })
   if (errors.length) console.log('editor errors:\n' + errors.slice(0, 10).join('\n'))
 
   // Front end at the canvas width.
   const live = await browser.newContext({ viewport: { width: Math.round(box.width), height: 900 }, ignoreHTTPSErrors: true, reducedMotion: 'reduce' })
+  await prepare(live)
   const lp = await live.newPage()
   await lp.goto(base + livePath, { waitUntil: 'networkidle' })
   await lp.evaluate(async () => { for (let y = 0; y < document.documentElement.scrollHeight; y += 400) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 30)) } window.scrollTo(0, 0) })
   await lp.waitForLoadState('networkidle')
   await lp.evaluate(() => { const n = document.querySelector('.rj-nav'); if (n) n.style.position = 'relative' })
-  await lp.screenshot({ path: `cmp/${ label }-live.png`, fullPage: true, animations: 'disabled' })
+  await lp.screenshot({ path: `output/${ label }-live.png`, fullPage: true, animations: 'disabled' })
 
   // Diff.
-  const me = await sharp(`cmp/${ label }-editor.png`).metadata()
-  const ml = await sharp(`cmp/${ label }-live.png`).metadata()
+  const me = await sharp(`output/${ label }-editor.png`).metadata()
+  const ml = await sharp(`output/${ label }-live.png`).metadata()
   const W = Math.min(me.width, ml.width), H = Math.min(me.height, ml.height, contentHeight)
   console.log(`editor ${ me.width }x${ me.height } / live ${ ml.width }x${ ml.height }`)
-  const ra = await sharp(`cmp/${ label }-editor.png`).extract({ left: 0, top: 0, width: W, height: H }).removeAlpha().raw().toBuffer()
-  const rb = await sharp(`cmp/${ label }-live.png`).extract({ left: 0, top: 0, width: W, height: H }).removeAlpha().raw().toBuffer()
+  const ra = await sharp(`output/${ label }-editor.png`).extract({ left: 0, top: 0, width: W, height: H }).removeAlpha().raw().toBuffer()
+  const rb = await sharp(`output/${ label }-live.png`).extract({ left: 0, top: 0, width: W, height: H }).removeAlpha().raw().toBuffer()
   let bad = 0
   const bands = []
   for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
@@ -71,9 +73,9 @@ try {
   console.log('bands >0.5%: ' + bands.map((n, i) => [ i * 150, 100 * n / (W * 150) ]).filter(([ , p ]) => p > 0.5).map(([ y, p ]) => `${ y }:${ p.toFixed(1) }%`).join('  '))
   for (let top = 0, n = 0; top < H; top += 900, n++) {
     const sh = Math.min(900, H - top)
-    const a = await sharp(`cmp/${ label }-editor.png`).extract({ left: 0, top, width: W, height: sh }).toBuffer()
-    const b = await sharp(`cmp/${ label }-live.png`).extract({ left: 0, top, width: W, height: sh }).toBuffer()
-    await sharp({ create: { width: W * 2 + 10, height: sh, channels: 3, background: '#000' } }).composite([ { input: a, left: 0, top: 0 }, { input: b, left: W + 10, top: 0 } ]).png().toFile(`cmp/${ label }-eside-${ String(n).padStart(2, '0') }.png`)
+    const a = await sharp(`output/${ label }-editor.png`).extract({ left: 0, top, width: W, height: sh }).toBuffer()
+    const b = await sharp(`output/${ label }-live.png`).extract({ left: 0, top, width: W, height: sh }).toBuffer()
+    await sharp({ create: { width: W * 2 + 10, height: sh, channels: 3, background: '#000' } }).composite([ { input: a, left: 0, top: 0 }, { input: b, left: W + 10, top: 0 } ]).png().toFile(`output/${ label }-eside-${ String(n).padStart(2, '0') }.png`)
   }
 } finally {
   await browser.close()

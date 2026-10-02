@@ -17,6 +17,9 @@
 // Page shell: a heading band, then the content on a surface panel.
 .rj-page {
 	display: grid;
+	// A track that may shrink: wide content (a table) scrolls or wraps inside
+	// its own box instead of widening the page.
+	grid-template-columns: minmax(0, 1fr);
 	gap: 3.5rem;
 	padding: 4.4rem var(--rj-gutter) 7.5rem;
 

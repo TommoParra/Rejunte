@@ -2,10 +2,10 @@
 // Reports elements that stick out of the viewport (unless a clipping ancestor
 // hides them on purpose), boxes whose content overflows them, and page-level
 // horizontal scroll.
-import { chromium, webkit, firefox } from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/index.mjs'
+import { chromium, webkit, firefox, BASE, PROTOTYPE, prepare } from './lib.mjs'
 
-const base = 'https://rejunte.local:8890'
-const pages = [ '/', '/vitrina/', '/la-tanda/', '/encargos/', '/el-taller/', '/producto/alfajores-de-maicena/', '/producto/caja-de-alfajores/', '/categoria/tortas/', '/carrito/', '/mi-cuenta/', '/no-existe/', '/?s=torta&post_type=product' ]
+const base = BASE
+const pages = [ '/', '/vitrina/', '/la-tanda/', '/encargos/', '/el-taller/', '/producto/alfajores-de-maicena/', '/producto/caja-de-alfajores/', '/categoria/tortas/', '/carrito/', '/preguntas-frecuentes/', '/politica-de-cookies/', '/condiciones-de-venta/', '/no-existe/', '/?s=torta&post_type=product' ]
 const widths = (process.env.WIDTHS || '320,360,390,414,768,1024,1280,1440,1920,2560').split(',').map(Number)
 const engines = { chromium, webkit, firefox }
 const only = process.env.ENGINES ? process.env.ENGINES.split(',') : [ 'chromium' ]
@@ -42,6 +42,7 @@ for (const engineName of only) {
   const browser = await engines[engineName].launch()
   for (const width of widths) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, ignoreHTTPSErrors: true, reducedMotion: 'reduce' })
+    await prepare(context)
     // A product in the cart, so cart and header render their filled states.
     const seed = await context.newPage()
     await seed.goto(base + '/producto/alfajores-de-maicena/', { waitUntil: 'networkidle' })

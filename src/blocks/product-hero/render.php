@@ -35,6 +35,8 @@ $rejunte_category = $rejunte_terms && ! is_wp_error( $rejunte_terms ) ? $rejunte
 $rejunte_label    = (string) $attributes['buttonLabel'];
 $rejunte_added    = (string) $attributes['addedLabel'];
 $rejunte_sizes    = '(max-width: 62rem) 100vw, 45vw';
+$rejunte_food     = rejunte_food_info( $rejunte_product );
+$rejunte_has_food = $rejunte_food['ingredients'] || $rejunte_food['allergens'] || $rejunte_food['traces'];
 ?>
 <?php if ( $rejunte_notices ) : ?>
 	<div class="rj-notices rj-product__notices"><?php echo $rejunte_notices; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WooCommerce notice templates escape their output. ?></div>
@@ -172,6 +174,44 @@ $rejunte_sizes    = '(max-width: 62rem) 100vw, 45vw';
 				</div>
 			<?php endif; ?>
 		</div>
+
+		<section class="rj-food" aria-labelledby="rj-food-<?php echo esc_attr( (string) $rejunte_id ); ?>">
+			<h2 class="rj-food__title" id="rj-food-<?php echo esc_attr( (string) $rejunte_id ); ?>"><?php esc_html_e( 'Ingredientes y alérgenos', 'rejunte' ); ?></h2>
+			<?php if ( $rejunte_has_food ) : ?>
+				<?php if ( $rejunte_food['ingredients'] ) : ?>
+					<p class="rj-food__ingredients"><?php echo esc_html( $rejunte_food['ingredients'] ); ?></p>
+				<?php endif; ?>
+				<?php if ( $rejunte_food['allergens'] ) : ?>
+					<p class="rj-food__label"><?php esc_html_e( 'Contiene', 'rejunte' ); ?></p>
+					<ul class="rj-chips rj-food__allergens">
+						<?php foreach ( $rejunte_food['allergens'] as $rejunte_allergen ) : ?>
+							<li><?php echo esc_html( $rejunte_allergen ); ?></li>
+						<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>
+				<?php if ( $rejunte_food['traces'] ) : ?>
+					<p class="rj-food__note">
+						<?php
+						/* translators: %s: possible traces. */
+						echo esc_html( sprintf( __( 'Puede contener trazas de %s.', 'rejunte' ), $rejunte_food['traces'] ) );
+						?>
+					</p>
+				<?php endif; ?>
+			<?php else : ?>
+				<p class="rj-food__note">
+					<?php esc_html_e( 'Pedinos la lista de ingredientes y alérgenos antes de encargar:', 'rejunte' ); ?>
+					<a href="<?php echo esc_url( rejunte_whatsapp_url( sprintf( /* translators: %s: product name. */ __( 'Hola Rejunte, ¿qué ingredientes y alérgenos tiene «%s»?', 'rejunte' ), $rejunte_product->get_name() ) ) ); ?>"><?php esc_html_e( 'preguntar por WhatsApp', 'rejunte' ); ?></a>.
+				</p>
+			<?php endif; ?>
+			<?php if ( $rejunte_food['conservation'] ) : ?>
+				<p class="rj-food__note">
+					<?php
+					/* translators: %s: how to keep the product. */
+					echo esc_html( sprintf( __( 'Conservación: %s', 'rejunte' ), $rejunte_food['conservation'] ) );
+					?>
+				</p>
+			<?php endif; ?>
+		</section>
 
 		<?php if ( $attributes['chips'] ) : ?>
 			<ul class="rj-chips">

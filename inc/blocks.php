@@ -295,3 +295,26 @@ function rejunte_unique_ids( string $content, array $block ): string {
 	return $processor->get_updated_html();
 }
 add_filter( 'render_block', 'rejunte_unique_ids', 50, 2 );
+
+/**
+ * "Tanda del 1 de octubre": with automatic date on, the gallery's eyebrow shows
+ * the latest release day (Thursday unless set otherwise), in the site's timezone
+ * and language.
+ *
+ * @param string               $content Rendered block.
+ * @param array<string, mixed> $block   Parsed block.
+ */
+function rejunte_render_tanda_date( string $content, array $block ): string {
+	$attributes = $block['attrs'] ?? array();
+	if ( empty( $attributes['autoDate'] ) ) {
+		return $content;
+	}
+	$day   = max( 1, min( 7, (int) ( $attributes['releaseDay'] ?? 4 ) ) );
+	$now   = current_datetime();
+	$since = ( (int) $now->format( 'N' ) - $day + 7 ) % 7;
+	$date  = wp_date( 'j \d\e F', $now->modify( "-{$since} days" )->getTimestamp() );
+	$label = trim( ( $attributes['datePrefix'] ?? __( 'Tanda del', 'rejunte' ) ) . ' ' . $date );
+
+	return (string) preg_replace( '#(<span class="rj-eyebrow">).*?(</span>)#s', '${1}' . esc_html( $label ) . '${2}', $content, 1 );
+}
+add_filter( 'render_block_rejunte/tanda', 'rejunte_render_tanda_date', 10, 2 );

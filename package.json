@@ -10,10 +10,22 @@
     "build:css": "sass --no-source-map --style=compressed src/scss/global.scss:assets/css/global.css src/scss/editor.scss:assets/css/editor.css src/scss/woocommerce.scss:assets/css/woocommerce.css",
     "start": "wp-scripts start --webpack-src-dir=src/blocks --output-path=build/blocks --experimental-modules",
     "lint:js": "wp-scripts lint-js src",
-    "lint:css": "wp-scripts lint-style \"src/**/*.scss\""
+    "lint:css": "wp-scripts lint-style \"src/**/*.scss\"",
+    "zip": "npm run build && node scripts/zip.mjs",
+    "test:a11y": "node tests/visual/axe.mjs",
+    "test:responsive": "node tests/visual/overflow.mjs",
+    "test:browsers": "node tests/visual/xbrowser.mjs",
+    "test:flows": "node tests/visual/wa-flow.mjs && node tests/visual/interact.mjs",
+    "test:prototype": "node tests/visual/compare.mjs 1440 900 desktop && node tests/visual/compare.mjs 390 844 phone",
+    "test:editor": "node tests/visual/editor-compare.mjs 37 / editor",
+    "test:seo": "python3 tests/visual/seo-audit.py",
+    "test:visual": "npm run test:a11y && npm run test:responsive && npm run test:flows && npm run test:seo"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@wordpress/scripts": "^31.0.0",
-    "sass": "^1.80.0"
+    "playwright": "^1.62.1",
+    "sass": "^1.80.0",
+    "sharp": "^0.35.4"
   }
 }

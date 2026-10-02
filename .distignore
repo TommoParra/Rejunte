@@ -1,0 +1,16 @@
+# Not shipped with the theme (see scripts/zip.mjs).
+node_modules
+src
+tests
+docs
+scripts
+package.json
+package-lock.json
+.editorconfig
+.gitignore
+.gitattributes
+.distignore
+.git
+backlog.md
+rejunte.zip
+.DS_Store

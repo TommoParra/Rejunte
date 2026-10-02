@@ -1,5 +1,5 @@
 import { InspectorControls, RichText, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
+import { CheckboxControl, PanelBody, TextControl, TextareaControl } from '@wordpress/components';
 import { store as coreStore, useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -10,6 +10,24 @@ import { RjImage } from '../../shared/image';
 import { euros, html } from '../../shared/text';
 
 const stripParagraphs = ( value ) => html( value ).replace( /<\/?p[^>]*>/g, '' ).trim();
+
+// The 14 allergens to declare (Reg. UE 1169/2011, annex II); same keys as PHP.
+const ALLERGENS = {
+	gluten: __( 'Gluten', 'rejunte' ),
+	crustaceos: __( 'Crustáceos', 'rejunte' ),
+	huevo: __( 'Huevo', 'rejunte' ),
+	pescado: __( 'Pescado', 'rejunte' ),
+	cacahuete: __( 'Cacahuete', 'rejunte' ),
+	soja: __( 'Soja', 'rejunte' ),
+	leche: __( 'Leche', 'rejunte' ),
+	frutos: __( 'Frutos de cáscara', 'rejunte' ),
+	apio: __( 'Apio', 'rejunte' ),
+	mostaza: __( 'Mostaza', 'rejunte' ),
+	sesamo: __( 'Sésamo', 'rejunte' ),
+	sulfitos: __( 'Sulfitos', 'rejunte' ),
+	altramuces: __( 'Altramuces', 'rejunte' ),
+	moluscos: __( 'Moluscos', 'rejunte' ),
+};
 
 /**
  * Editing a product shows its page as it is: the name, presentation, short
@@ -40,10 +58,53 @@ export default function Edit( { attributes, setAttributes, isSelected, context: 
 		: {};
 	const price = euros( productPrice( product ) );
 	const setChips = ( next ) => setAttributes( { chips: next } );
+	const food = {
+		ingredients: meta?.rejunte_ingredients || '',
+		allergens: meta?.rejunte_allergens || [],
+		traces: meta?.rejunte_traces || '',
+		conservation: meta?.rejunte_conservation || '',
+	};
+	const setFood = ( key, value ) => setMeta( { ...meta, [ key ]: value } );
+	const hasFood = food.ingredients || food.allergens.length || food.traces;
 
 	return (
 		<>
 			<InspectorControls>
+				{ isProduct && (
+					<PanelBody title={ __( 'Ingredientes y alérgenos', 'rejunte' ) }>
+						<TextareaControl
+							__nextHasNoMarginBottom
+							label={ __( 'Ingredientes', 'rejunte' ) }
+							help={ __( 'Obligatorio para vender alimentos a distancia (Reg. UE 1169/2011).', 'rejunte' ) }
+							value={ food.ingredients }
+							onChange={ ( value ) => setFood( 'rejunte_ingredients', value ) }
+						/>
+						<p className="components-base-control__label">{ __( 'Contiene', 'rejunte' ) }</p>
+						{ Object.entries( ALLERGENS ).map( ( [ key, label ] ) => (
+							<CheckboxControl
+								__nextHasNoMarginBottom
+								key={ key }
+								label={ label }
+								checked={ food.allergens.includes( key ) }
+								onChange={ ( checked ) =>
+									setFood( 'rejunte_allergens', checked ? [ ...food.allergens, key ] : food.allergens.filter( ( item ) => item !== key ) )
+								}
+							/>
+						) ) }
+						<TextControl
+							__nextHasNoMarginBottom
+							label={ __( 'Puede contener trazas de', 'rejunte' ) }
+							value={ food.traces }
+							onChange={ ( value ) => setFood( 'rejunte_traces', value ) }
+						/>
+						<TextControl
+							__nextHasNoMarginBottom
+							label={ __( 'Conservación', 'rejunte' ) }
+							value={ food.conservation }
+							onChange={ ( value ) => setFood( 'rejunte_conservation', value ) }
+						/>
+					</PanelBody>
+				) }
 				<PanelBody title={ __( 'Textos de la plantilla', 'rejunte' ) }>
 					<TextControl __nextHasNoMarginBottom label={ __( 'Botón', 'rejunte' ) } value={ buttonLabel } onChange={ ( value ) => setAttributes( { buttonLabel: value } ) } />
 					<TextControl __nextHasNoMarginBottom label={ __( 'Botón con el producto ya en el pedido', 'rejunte' ) } value={ attributes.addedLabel } onChange={ ( value ) => setAttributes( { addedLabel: value } ) } />
@@ -128,6 +189,33 @@ export default function Edit( { attributes, setAttributes, isSelected, context: 
 							<RichText tagName="span" className="rj-button" value={ buttonLabel } allowedFormats={ [] } withoutInteractiveFormatting onChange={ ( value ) => setAttributes( { buttonLabel: html( value ) } ) } />
 						</div>
 					</div>
+
+					<section className="rj-food">
+						<h2 className="rj-food__title">{ __( 'Ingredientes y alérgenos', 'rejunte' ) }</h2>
+						{ hasFood ? (
+							<>
+								{ food.ingredients && <p className="rj-food__ingredients">{ food.ingredients }</p> }
+								{ food.allergens.length > 0 && (
+									<>
+										<p className="rj-food__label">{ __( 'Contiene', 'rejunte' ) }</p>
+										<ul className="rj-chips rj-food__allergens">
+											{ Object.keys( ALLERGENS ).filter( ( key ) => food.allergens.includes( key ) ).map( ( key ) => (
+												<li key={ key }>{ ALLERGENS[ key ] }</li>
+											) ) }
+										</ul>
+									</>
+								) }
+								{ food.traces && <p className="rj-food__note">{ `${ __( 'Puede contener trazas de', 'rejunte' ) } ${ food.traces }.` }</p> }
+							</>
+						) : (
+							<p className="rj-food__note">
+								{ isProduct
+									? __( 'Completá los ingredientes y alérgenos en la barra lateral: es obligatorio para vender alimentos online.', 'rejunte' )
+									: __( 'Los ingredientes y alérgenos del producto.', 'rejunte' ) }
+							</p>
+						) }
+						{ food.conservation && <p className="rj-food__note">{ `${ __( 'Conservación:', 'rejunte' ) } ${ food.conservation }` }</p> }
+					</section>
 
 					<ul className="rj-chips">
 						{ chips.map( ( chip, index ) => (

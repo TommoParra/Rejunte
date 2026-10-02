@@ -1,7 +1,8 @@
-import { chromium } from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/index.mjs'
-const base = 'https://rejunte.local:8890'
+import { chromium, BASE, PROTOTYPE, prepare } from './lib.mjs'
+const base = BASE
 const browser = await chromium.launch()
 const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, ignoreHTTPSErrors: true })
+await prepare(context)
 const page = await context.newPage()
 const errors = []
 page.on('pageerror', e => errors.push(e.message))

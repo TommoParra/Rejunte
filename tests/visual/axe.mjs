@@ -1,23 +1,23 @@
 // axe-core accessibility audit (WCAG 2.2 A/AA + best practices) across pages,
 // at desktop and phone widths, with the phone menu opened once.
-import { chromium } from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/index.mjs'
-import { AxeBuilder } from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/@axe-core+playwright@4.13.0_playwright-core@1.62.1/node_modules/@axe-core/playwright/dist/index.mjs'
+import { chromium, BASE, PROTOTYPE, prepare } from './lib.mjs'
+import { AxeBuilder } from '@axe-core/playwright'
 
-const paths = process.argv.slice(2).length ? process.argv.slice(2) : [ '/', '/vitrina/', '/la-tanda/', '/encargos/', '/el-taller/', '/producto/alfajores-de-maicena/', '/categoria/tortas/', '/carrito/', '/finalizar-compra/', '/mi-cuenta/', '/no-existe/', '/?s=torta&post_type=product' ]
+const paths = process.argv.slice(2).length ? process.argv.slice(2) : [ '/', '/vitrina/', '/la-tanda/', '/encargos/', '/el-taller/', '/producto/alfajores-de-maicena/', '/producto/caja-de-alfajores/', '/categoria/tortas/', '/carrito/', '/preguntas-frecuentes/', '/aviso-legal/', '/politica-de-privacidad/', '/politica-de-cookies/', '/condiciones-de-venta/', '/no-existe/', '/?s=torta&post_type=product' ]
 const browser = await chromium.launch()
 let total = 0
 for (const width of [ 1440, 390 ]) {
   const context = await browser.newContext({ viewport: { width, height: 900 }, ignoreHTTPSErrors: true })
   // Something in the cart, so cart and checkout render their full forms.
   const seed = await context.newPage()
-  await seed.goto('https://rejunte.local:8890/', { waitUntil: 'networkidle' })
+  await seed.goto(BASE + '/', { waitUntil: 'networkidle' })
   await seed.locator('.rj-price button[data-rj-add]').first().click()
   await seed.waitForFunction(() => document.querySelector('.rj-nav__cta').textContent.includes('·'))
   await seed.close()
 
   for (const path of paths) {
     const page = await context.newPage()
-    await page.goto('https://rejunte.local:8890' + path, { waitUntil: 'networkidle' })
+    await page.goto(BASE + path, { waitUntil: 'networkidle' })
     await page.waitForTimeout(400)
     if (width < 600 && path === '/') {
       await page.locator('.rj-nav__burger').click()

@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "rejunte/faq",
+	"version": "1.0.0",
+	"title": "Preguntas frecuentes",
+	"category": "rejunte",
+	"icon": "editor-help",
+	"description": "Preguntas y respuestas desplegables. También se publican como datos estructurados (FAQPage) y en llms.txt.",
+	"keywords": [ "faq", "preguntas", "ayuda", "dudas" ],
+	"textdomain": "rejunte",
+	"attributes": {
+		"eyebrow": { "type": "string", "default": "" },
+		"heading": { "type": "string", "default": "" },
+		"headingLevel": { "type": "number", "enum": [ 1, 2 ], "default": 2 },
+		"items": { "type": "array", "default": [] }
+	},
+	"supports": {
+		"anchor": true,
+		"html": false
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

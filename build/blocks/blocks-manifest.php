@@ -139,6 +139,53 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'style' => 'file:./style-index.css'
 	),
+	'faq' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'rejunte/faq',
+		'version' => '1.0.0',
+		'title' => 'Preguntas frecuentes',
+		'category' => 'rejunte',
+		'icon' => 'editor-help',
+		'description' => 'Preguntas y respuestas desplegables. También se publican como datos estructurados (FAQPage) y en llms.txt.',
+		'keywords' => array(
+			'faq',
+			'preguntas',
+			'ayuda',
+			'dudas'
+		),
+		'textdomain' => 'rejunte',
+		'attributes' => array(
+			'eyebrow' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'heading' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'headingLevel' => array(
+				'type' => 'number',
+				'enum' => array(
+					1,
+					2
+				),
+				'default' => 2
+			),
+			'items' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
+			)
+		),
+		'supports' => array(
+			'anchor' => true,
+			'html' => false
+		),
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css'
+	),
 	'footer' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
@@ -179,6 +226,16 @@ return array(
 			'country' => array(
 				'type' => 'string',
 				'default' => 'ES'
+			),
+			'legal' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
+			),
+			'cookiesLabel' => array(
+				'type' => 'string',
+				'default' => 'Configurar cookies'
 			)
 		),
 		'supports' => array(
@@ -609,6 +666,18 @@ return array(
 					2
 				),
 				'default' => 2
+			),
+			'autoDate' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'datePrefix' => array(
+				'type' => 'string',
+				'default' => 'Tanda del'
+			),
+			'releaseDay' => array(
+				'type' => 'number',
+				'default' => 4
 			)
 		),
 		'supports' => array(

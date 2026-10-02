@@ -1,11 +1,11 @@
-import { chromium } from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/index.mjs'
+import { chromium, BASE, PROTOTYPE, prepare } from './lib.mjs'
 const browser = await chromium.launch()
 const context = await browser.newContext({ ignoreHTTPSErrors: true })
 const page = await context.newPage()
 const thirdParty = new Set()
 page.on('request', r => { const h = new URL(r.url()).host; if (h !== 'rejunte.local:8890') thirdParty.add(h) })
 const show = async label => console.log(label, (await context.cookies()).map(c => `${ c.name } (${ c.expires > 0 ? Math.round((c.expires - Date.now() / 1000) / 86400) + 'd' : 'session' })`), '| localStorage:', await page.evaluate(() => Object.keys(localStorage)))
-await page.goto('https://rejunte.local:8890/', { waitUntil: 'networkidle' })
+await page.goto(BASE + '/', { waitUntil: 'networkidle' })
 await show('first visit:')
 await page.locator('.rj-price button[data-rj-add]').first().click()
 await page.waitForFunction(() => document.querySelector('.rj-nav__cta').textContent.includes('·'))

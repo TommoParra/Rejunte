@@ -40,6 +40,90 @@ function rejunte_register_product_meta(): void {
 add_action( 'init', 'rejunte_register_product_meta' );
 
 /**
+ * The 14 allergens that must be declared (Reg. UE 1169/2011, annex II).
+ *
+ * @return array<string, string> Slug → label.
+ */
+function rejunte_allergens(): array {
+	return array(
+		'gluten'      => __( 'Gluten', 'rejunte' ),
+		'crustaceos'  => __( 'Crustáceos', 'rejunte' ),
+		'huevo'       => __( 'Huevo', 'rejunte' ),
+		'pescado'     => __( 'Pescado', 'rejunte' ),
+		'cacahuete'   => __( 'Cacahuete', 'rejunte' ),
+		'soja'        => __( 'Soja', 'rejunte' ),
+		'leche'       => __( 'Leche', 'rejunte' ),
+		'frutos'      => __( 'Frutos de cáscara', 'rejunte' ),
+		'apio'        => __( 'Apio', 'rejunte' ),
+		'mostaza'     => __( 'Mostaza', 'rejunte' ),
+		'sesamo'      => __( 'Sésamo', 'rejunte' ),
+		'sulfitos'    => __( 'Sulfitos', 'rejunte' ),
+		'altramuces'  => __( 'Altramuces', 'rejunte' ),
+		'moluscos'    => __( 'Moluscos', 'rejunte' ),
+	);
+}
+
+/**
+ * Food information on products: ingredients, allergens, possible traces and
+ * how to keep it. Distance sales of food must show it before the purchase is
+ * concluded (Reg. UE 1169/2011 art. 14).
+ */
+function rejunte_register_food_meta(): void {
+	$auth = static fn( $allowed, $meta_key, $post_id ) => current_user_can( 'edit_post', $post_id );
+	foreach ( array( 'rejunte_ingredients', 'rejunte_traces', 'rejunte_conservation' ) as $key ) {
+		register_post_meta(
+			'product',
+			$key,
+			array(
+				'type'              => 'string',
+				'single'            => true,
+				'default'           => '',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_textarea_field',
+				'auth_callback'     => $auth,
+			)
+		);
+	}
+	register_post_meta(
+		'product',
+		'rejunte_allergens',
+		array(
+			'type'              => 'array',
+			'single'            => true,
+			'default'           => array(),
+			'show_in_rest'      => array(
+				'schema' => array(
+					'type'  => 'array',
+					'items' => array(
+						'type' => 'string',
+						'enum' => array_keys( rejunte_allergens() ),
+					),
+				),
+			),
+			'sanitize_callback' => static fn( $value ) => array_values( array_intersect( (array) $value, array_keys( rejunte_allergens() ) ) ),
+			'auth_callback'     => $auth,
+		)
+	);
+}
+add_action( 'init', 'rejunte_register_food_meta' );
+
+/**
+ * A product's food information, ready to show.
+ *
+ * @return array{ingredients: string, allergens: string[], traces: string, conservation: string}
+ */
+function rejunte_food_info( WC_Product $product ): array {
+	$labels = rejunte_allergens();
+	$keys   = (array) $product->get_meta( 'rejunte_allergens' );
+	return array(
+		'ingredients'  => trim( (string) $product->get_meta( 'rejunte_ingredients' ) ),
+		'allergens'    => array_values( array_intersect_key( $labels, array_flip( $keys ) ) ),
+		'traces'       => trim( (string) $product->get_meta( 'rejunte_traces' ) ),
+		'conservation' => trim( (string) $product->get_meta( 'rejunte_conservation' ) ),
+	);
+}
+
+/**
  * The same field in the product data panel, next to the price — only when
  * products are edited in the classic editor. In the block editor it is typed in
  * place on the product page preview, and a second field in the form below would
@@ -176,6 +260,8 @@ function rejunte_store_config(): void {
 		'i18n'    => array(
 			/* translators: 1: product name, 2: units in the order. */
 			'added' => __( '%1$s: %2$s en el pedido', 'rejunte' ),
+			'view'  => __( 'Ver pedido', 'rejunte' ),
+			'close' => __( 'Cerrar', 'rejunte' ),
 		),
 	);
 	printf(
@@ -621,6 +707,21 @@ function rejunte_product_schema( WC_Product $product ): array {
 	if ( $kicker ) {
 		$node['size'] = $kicker;
 	}
+	$food = rejunte_food_info( $product );
+	foreach ( array(
+		__( 'Ingredientes', 'rejunte' )                 => $food['ingredients'],
+		__( 'Alérgenos', 'rejunte' )                    => implode( ', ', $food['allergens'] ),
+		__( 'Puede contener trazas de', 'rejunte' )     => $food['traces'],
+		__( 'Conservación', 'rejunte' )                 => $food['conservation'],
+	) as $name => $value ) {
+		if ( '' !== $value ) {
+			$node['additionalProperty'][] = array(
+				'@type' => 'PropertyValue',
+				'name'  => $name,
+				'value' => $value,
+			);
+		}
+	}
 	if ( '' !== $product->get_price() ) {
 		$node['offers'] = array(
 			'@type'                   => 'Offer',
@@ -631,6 +732,22 @@ function rejunte_product_schema( WC_Product $product ): array {
 			'itemCondition'           => 'https://schema.org/NewCondition',
 			'availableDeliveryMethod' => 'https://schema.org/OnSitePickup',
 			'seller'                  => array( '@id' => $home . '#negocio' ),
+			// Prices are reviewed yearly at most; the date moves with each render.
+			'priceValidUntil'         => gmdate( 'Y-12-31', strtotime( '+1 year' ) ),
+			// Pickup only: nothing ships.
+			'shippingDetails'         => array(
+				'@type'       => 'OfferShippingDetails',
+				'doesNotShip' => true,
+			),
+			// Perishable food is excluded from the right of withdrawal (TRLGDCU art. 103.d).
+			'hasMerchantReturnPolicy' => array_filter(
+				array(
+					'@type'                => 'MerchantReturnPolicy',
+					'applicableCountry'    => 'ES',
+					'returnPolicyCategory' => 'https://schema.org/MerchantReturnNotPermitted',
+					'merchantReturnLink'   => wc_terms_and_conditions_page_id() ? get_permalink( wc_terms_and_conditions_page_id() ) : '',
+				)
+			),
 		);
 	}
 
@@ -795,12 +912,15 @@ function rejunte_llms_products( array $lines ): array {
 			)
 		);
 		$summary = rejunte_plain_text( $product->get_short_description() );
+		$food    = rejunte_food_info( $product );
 		$lines[] = sprintf(
-			'- [%1$s](%2$s)%3$s%4$s',
+			'- [%1$s](%2$s)%3$s%4$s%5$s',
 			$product->get_name(),
 			$product->get_permalink(),
 			$details ? ' (' . implode( ' · ', $details ) . ')' : '',
-			$summary ? ': ' . $summary : ''
+			$summary ? ': ' . $summary : '',
+			/* translators: %s: allergen list. */
+			$food['allergens'] ? ' ' . sprintf( __( 'Alérgenos: %s.', 'rejunte' ), implode( ', ', $food['allergens'] ) ) : ''
 		);
 	}
 	$lines[] = '';
@@ -849,6 +969,38 @@ function rejunte_whatsapp_checkout_enabled(): bool {
 }
 
 /**
+ * Days the order can be picked up: the next two weeks of opening days (from
+ * the footer's hours), starting tomorrow, since everything is made the day before.
+ *
+ * @return array<string, string> Y-m-d → "jueves 8 de octubre".
+ */
+function rejunte_pickup_options(): array {
+	$hours = rejunte_business()['hours'];
+	if ( ! $hours ) {
+		return array();
+	}
+	$week    = array( 'Monday' => 1, 'Tuesday' => 2, 'Wednesday' => 3, 'Thursday' => 4, 'Friday' => 5, 'Saturday' => 6, 'Sunday' => 7 );
+	$open    = array_map( static fn( $day ) => $week[ $day ] ?? 0, array_merge( ...array_column( $hours, 'days' ) ) );
+	$options = array();
+	$day     = current_datetime()->setTime( 12, 0 );
+	for ( $i = 1; $i <= 14; $i++ ) {
+		$date = $day->modify( "+{$i} days" );
+		if ( in_array( (int) $date->format( 'N' ), $open, true ) ) {
+			$options[ $date->format( 'Y-m-d' ) ] = wp_date( 'l j \d\e F', $date->getTimestamp() );
+		}
+	}
+	return $options;
+}
+
+/**
+ * The pickup day chosen in the cart, if it is still one of the options.
+ */
+function rejunte_pickup_selected(): string {
+	$value = function_exists( 'WC' ) && WC()->session ? (string) WC()->session->get( 'rejunte_pickup', '' ) : '';
+	return isset( rejunte_pickup_options()[ $value ] ) ? $value : '';
+}
+
+/**
  * The order message for a cart.
  *
  *     ¡Hola Rejunte! Quiero hacer este pedido:
@@ -888,12 +1040,23 @@ function rejunte_whatsapp_order_text( WC_Cart $cart ): string {
 	}
 
 	$lines[] = '';
+	$pickup  = rejunte_pickup_selected();
+	if ( $pickup ) {
+		$hours   = rejunte_business()['hours'][0] ?? null;
+		$lines[] = $hours
+			/* translators: 1: pickup day, 2: opening time, 3: closing time. */
+			? sprintf( __( 'Retiro: %1$s, de %2$s a %3$s', 'rejunte' ), rejunte_pickup_options()[ $pickup ], $hours['opens'], $hours['closes'] )
+			/* translators: %s: pickup day. */
+			: sprintf( __( 'Retiro: %s', 'rejunte' ), rejunte_pickup_options()[ $pickup ] );
+	}
 	/* translators: %s: order total. */
 	$lines[] = sprintf( __( 'Total: %s', 'rejunte' ), rejunte_format_euros( (float) $cart->get_total( 'edit' ) ) );
 
-	if ( '' !== trim( $settings['outro'] ) ) {
+	// The closing asks when to come by, unless a day was already chosen.
+	$outro = $pickup ? __( '¿Me lo confirmás?', 'rejunte' ) : trim( $settings['outro'] );
+	if ( '' !== $outro ) {
 		$lines[] = '';
-		$lines[] = trim( $settings['outro'] );
+		$lines[] = $outro;
 	}
 
 	return implode( "\n", $lines );
@@ -923,11 +1086,46 @@ function rejunte_store_api_whatsapp(): void {
 			'endpoint'        => \Automattic\WooCommerce\StoreApi\Schemas\V1\CartSchema::IDENTIFIER,
 			'namespace'       => 'rejunte',
 			'data_callback'   => static fn() => array(
-				'whatsapp_url' => rejunte_whatsapp_checkout_enabled() ? rejunte_cart_whatsapp_url() : '',
+				'whatsapp_url'   => rejunte_whatsapp_checkout_enabled() ? rejunte_cart_whatsapp_url() : '',
+				'pickup'         => rejunte_pickup_selected(),
+				'pickup_options' => array_map(
+					static fn( $value, $label ) => array(
+						'value' => $value,
+						'label' => $label,
+					),
+					array_keys( rejunte_pickup_options() ),
+					rejunte_pickup_options()
+				),
+				'phone'          => rejunte_whatsapp_display(),
+				'phone_tel'      => '+' . rejunte_whatsapp_number(),
 			),
 			'schema_callback' => static fn() => array(
-				'whatsapp_url' => array(
+				'whatsapp_url'   => array(
 					'description' => __( 'Enlace a WhatsApp con el pedido escrito.', 'rejunte' ),
+					'type'        => 'string',
+					'context'     => array( 'view', 'edit' ),
+					'readonly'    => true,
+				),
+				'pickup'         => array(
+					'description' => __( 'Día de retiro elegido (Y-m-d).', 'rejunte' ),
+					'type'        => 'string',
+					'context'     => array( 'view', 'edit' ),
+					'readonly'    => true,
+				),
+				'pickup_options' => array(
+					'description' => __( 'Días de retiro disponibles.', 'rejunte' ),
+					'type'        => 'array',
+					'context'     => array( 'view', 'edit' ),
+					'readonly'    => true,
+				),
+				'phone'          => array(
+					'description' => __( 'Teléfono de pedidos.', 'rejunte' ),
+					'type'        => 'string',
+					'context'     => array( 'view', 'edit' ),
+					'readonly'    => true,
+				),
+				'phone_tel'      => array(
+					'description' => __( 'Teléfono de pedidos, para tel:.', 'rejunte' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
@@ -936,6 +1134,21 @@ function rejunte_store_api_whatsapp(): void {
 			'schema_type'     => ARRAY_A,
 		)
 	);
+
+	// The cart's pickup-day choice (wc.blocksCheckout.extensionCartUpdate).
+	if ( function_exists( 'woocommerce_store_api_register_update_callback' ) ) {
+		woocommerce_store_api_register_update_callback(
+			array(
+				'namespace' => 'rejunte',
+				'callback'  => static function ( $data ) {
+					$value = sanitize_text_field( (string) ( $data['pickup'] ?? '' ) );
+					if ( '' === $value || isset( rejunte_pickup_options()[ $value ] ) ) {
+						WC()->session->set( 'rejunte_pickup', $value );
+					}
+				},
+			)
+		);
+	}
 }
 // WooCommerce fires this while plugins load, before the theme exists; register
 // right away in that case.
@@ -1031,7 +1244,7 @@ function rejunte_whatsapp_cart_script(): void {
 	wp_enqueue_script(
 		'rejunte-whatsapp-cart',
 		rejunte_asset_url( 'js/whatsapp-cart.js' ),
-		array( 'wc-blocks-checkout' ),
+		array( 'wc-blocks-checkout', 'wp-plugins', 'wp-element', 'wp-data' ),
 		(string) filemtime( $file ),
 		array( 'strategy' => 'defer' )
 	);
@@ -1039,11 +1252,54 @@ function rejunte_whatsapp_cart_script(): void {
 		'rejunte-whatsapp-cart',
 		'window.rejunteWhatsApp = ' . wp_json_encode(
 			array(
-				'label' => __( 'Pedir por WhatsApp', 'rejunte' ),
-				'url'   => rejunte_cart_whatsapp_url(),
+				'label'    => __( 'Pedir por WhatsApp', 'rejunte' ),
+				'url'      => rejunte_cart_whatsapp_url(),
+				'termsUrl' => wc_terms_and_conditions_page_id() ? get_permalink( wc_terms_and_conditions_page_id() ) : '',
+				'i18n'     => array(
+					'pickup' => __( '¿Qué día lo pasás a buscar?', 'rejunte' ),
+					'choose' => __( 'Elegí un día', 'rejunte' ),
+					'note'   => __( 'Al tocar «Pedir por WhatsApp» se abre WhatsApp con tu pedido escrito. Lo confirmamos por ahí y lo retirás en el taller.', 'rejunte' ),
+					'terms'  => __( 'Condiciones de venta', 'rejunte' ),
+					'copy'   => __( '¿No tenés WhatsApp? Copiá el pedido', 'rejunte' ),
+					'copied' => __( 'Pedido copiado', 'rejunte' ),
+					'call'   => __( 'y mandalo o llamanos al', 'rejunte' ),
+				),
 			)
 		) . ';',
 		'before'
 	);
 }
+
+/**
+ * Marks pages where orders close on WhatsApp (for the button's icon).
+ *
+ * @param string[] $classes Body classes.
+ * @return string[]
+ */
+function rejunte_whatsapp_body_class( array $classes ): array {
+	if ( rejunte_whatsapp_checkout_enabled() ) {
+		$classes[] = 'rj-whatsapp-orders';
+	}
+	return $classes;
+}
+add_filter( 'body_class', 'rejunte_whatsapp_body_class' );
 add_action( 'wp_enqueue_scripts', 'rejunte_whatsapp_cart_script' );
+
+/**
+ * The sitemap lists only pages meant to be found: not the cart, the checkout
+ * or the account page, which are noindex.
+ *
+ * @param array<string, mixed> $args      WP_Query arguments.
+ * @param string               $post_type Post type of this sitemap.
+ * @return array<string, mixed>
+ */
+function rejunte_sitemap_without_store_pages( array $args, string $post_type ): array {
+	if ( 'page' === $post_type ) {
+		$args['post__not_in'] = array_merge(
+			(array) ( $args['post__not_in'] ?? array() ),
+			array_filter( array_map( 'wc_get_page_id', array( 'cart', 'checkout', 'myaccount' ) ), static fn( $id ) => $id > 0 )
+		);
+	}
+	return $args;
+}
+add_filter( 'wp_sitemaps_posts_query_args', 'rejunte_sitemap_without_store_pages', 10, 2 );

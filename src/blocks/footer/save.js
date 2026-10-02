@@ -1,13 +1,14 @@
 import { RichText, useBlockProps } from '@wordpress/block-editor';
 
 import { RjImage } from '../../shared/image';
+import { plain } from '../../shared/text';
 
 export function columnsStyle( columns ) {
 	return 2 === columns.length ? undefined : { '--rj-foot-cols': columns.length };
 }
 
 export default function save( { attributes } ) {
-	const { logo, name, description, columns } = attributes;
+	const { logo, name, description, columns, legal, cookiesLabel } = attributes;
 
 	return (
 		<footer { ...useBlockProps.save( { className: 'rj-foot', style: columnsStyle( columns ) } ) }>
@@ -32,6 +33,24 @@ export default function save( { attributes } ) {
 					) ) }
 				</div>
 			) ) }
+			{ legal.length > 0 && (
+				<div className="rj-foot__legal">
+					<ul className="rj-foot__links">
+						{ legal.map( ( link, index ) => (
+							<li key={ index }>
+								<a href={ link.url }>
+									<RichText.Content value={ link.label } />
+								</a>
+							</li>
+						) ) }
+					</ul>
+					{ cookiesLabel && (
+						<button type="button" className="rj-foot__cookies" data-rj-consent-open="">
+							{ plain( cookiesLabel ) }
+						</button>
+					) }
+				</div>
+			) }
 		</footer>
 	);
 }

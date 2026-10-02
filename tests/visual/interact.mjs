@@ -1,10 +1,11 @@
-import { chromium } from '/Users/tom/Desktop/Web Devb/web-presence/node_modules/.pnpm/playwright@1.62.1/node_modules/playwright/index.mjs'
+import { chromium, BASE, PROTOTYPE, prepare } from './lib.mjs'
 const browser = await chromium.launch()
 const log = (...a) => console.log(...a)
 
 // Phone menu.
 const phone = await browser.newPage({ viewport: { width: 390, height: 844 }, ignoreHTTPSErrors: true })
-await phone.goto('https://rejunte.local:8890/', { waitUntil: 'networkidle' })
+await prepare(phone.context())
+await phone.goto(BASE + '/', { waitUntil: 'networkidle' })
 const burger = phone.locator('.rj-nav__burger')
 log('menu closed:', await burger.getAttribute('aria-expanded'), await phone.locator('#rj-nav-panel').isHidden(), '| label:', await burger.locator('.screen-reader-text').textContent())
 await burger.click()
@@ -18,7 +19,8 @@ log('navigated to:', new URL(phone.url()).pathname, '| current link:', await pho
 
 // Keyboard: skip link, motion toggle, gallery.
 const desk = await browser.newPage({ viewport: { width: 1440, height: 900 }, ignoreHTTPSErrors: true })
-await desk.goto('https://rejunte.local:8890/', { waitUntil: 'networkidle' })
+await prepare(desk.context())
+await desk.goto(BASE + '/', { waitUntil: 'networkidle' })
 await desk.keyboard.press('Tab')
 log('first tab stop:', await desk.evaluate(() => `${ document.activeElement.textContent } visible=${ document.activeElement.getBoundingClientRect().top >= 0 }`))
 await desk.keyboard.press('Tab')

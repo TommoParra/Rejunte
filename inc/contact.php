@@ -138,7 +138,7 @@ function rejunte_customize_contact( WP_Customize_Manager $customize ): void {
 		array(
 			'section'     => 'rejunte_contact',
 			'label'       => __( 'Final del mensaje del pedido', 'rejunte' ),
-			'description' => __( 'Va después del total. Puede quedar vacío.', 'rejunte' ),
+			'description' => __( 'Va después del total cuando no se eligió día de retiro (con día elegido, el mensaje cierra con «¿Me lo confirmás?»). Puede quedar vacío.', 'rejunte' ),
 			'type'        => 'textarea',
 		)
 	);
